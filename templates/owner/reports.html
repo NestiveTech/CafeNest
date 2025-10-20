@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - CafeNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f3e8;
+        }
+        
+        .navbar {
+            background: #8B4513;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 24px;
+        }
+        
+        .navbar .highlight {
+            color: #E2725B;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            margin-bottom: 30px;
+            border-top: 4px solid #C37A67;
+        }
+        
+        .page-header h2 {
+            color: #8B4513;
+            margin-bottom: 20px;
+        }
+        
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #6B2213;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #DEC2AF;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #FFFAF5;
+            color: #4a3728;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #E2725B;
+            box-shadow: 0 0 0 3px rgba(226, 114, 91, 0.15);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #D74426;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(226, 114, 91, 0.3);
+        }
+        
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #45A049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            border-left: 5px solid #E2725B;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(226, 114, 91, 0.2);
+        }
+        
+        .stat-card h3 {
+            color: #A0522D;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-card .value {
+            color: #6B2213;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .stat-card .currency {
+            color: #E2725B;
+        }
+        
+        .export-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            border-top: 4px solid #C37A67;
+        }
+        
+        .export-section h3 {
+            color: #8B4513;
+            margin-bottom: 20px;
+        }
+        
+        .export-section p {
+            color: #A0522D;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Cafe<span class="highlight">Nest</span></h1>
+        <div class="nav-links">
+            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+            <a href="{% url 'cafe_list' %}">Cafés</a>
+            <a href="{% url 'owner_table_list' %}">Tables</a>
+            <a href="{% url 'staff_list' %}">Staff</a>
+            <a href="{% url 'menu_list' %}">Menu</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'owner_logout' %}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h2>Reports & Analytics</h2>
+            
+            <form method="GET" class="filter-section">
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>TOTAL SALES</h3>
+                <div class="value currency">₹{{ total_sales|floatformat:2 }}</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>TOTAL ORDERS</h3>
+                <div class="value">{{ total_orders }}</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>AVERAGE ORDER VALUE</h3>
+                <div class="value currency">₹{{ average_order_value|floatformat:2 }}</div>
+            </div>
+        </div>
+        
+        <div class="export-section">
+            <h3>Export Reports</h3>
+            <p style="color: #A0522D; margin-bottom: 20px;">Download your sales reports in PDF or Excel format</p>
+            
+            <div class="export-buttons">
+                <a href="{% url 'export_pdf_report' %}" class="btn btn-primary">
+                    📄 Export as PDF
+                </a>
+                
+                <a href="{% url 'export_excel_report' %}" class="btn btn-success">
+                    📊 Export as Excel
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

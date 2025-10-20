@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Signup - CafeNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B4513 0%, #6B2213 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .signup-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(107, 34, 19, 0.4);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border-top: 5px solid #E2725B;
+        }
+        
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-section h1 {
+            color: #8B4513;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-section .highlight {
+            color: #E2725B;
+        }
+        
+        .logo-section p {
+            color: #A0522D;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #6B2213;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #DEC2AF;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #FFFAF5;
+            color: #4a3728;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #E2725B;
+            box-shadow: 0 0 0 3px rgba(226, 114, 91, 0.15);
+        }
+        
+        /* Fix for Django form widgets */
+        .form-group input[type="email"],
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #DEC2AF;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #FFFAF5;
+            color: #4a3728;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #E2725B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-primary:hover {
+            background: #D74426;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(226, 114, 91, 0.4);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #DEC2AF;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+            color: #A0522D;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .google-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 2px solid #DEC2AF;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #6B2213;
+        }
+        
+        .google-btn:hover {
+            border-color: #E2725B;
+            background: #FFF5E6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(226, 114, 91, 0.2);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #6B2213;
+            font-size: 14px;
+        }
+        
+        .login-link a {
+            color: #E2725B;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+            color: #D74426;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+        
+        .alert-error {
+            background: #FFCDD2;
+            color: #C62828;
+            border: 1px solid #EF9A9A;
+        }
+        
+        .errorlist {
+            color: #CD5C5C;
+            list-style: none;
+            font-size: 13px;
+            margin-top: 5px;
+            padding-left: 0;
+        }
+        
+        .password-match-error {
+            color: #CD5C5C;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .password-strength {
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .weak { color: #dc3545; }
+        .medium { color: #ffc107; }
+        .strong { color: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo-section">
+            <h1>Cafe<span class="highlight">Nest</span></h1>
+            <p>Owner Registration</p>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <form method="POST" id="signupForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_email"><i class="fas fa-envelope"></i> Email Address *</label>
+                <input type="email" name="email" id="id_email" required placeholder="Enter your email">
+                {% if form.email.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_first_name"><i class="fas fa-user"></i> First Name *</label>
+                <input type="text" name="first_name" id="id_first_name" required placeholder="Enter your first name">
+                {% if form.first_name.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.first_name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_last_name"><i class="fas fa-user"></i> Last Name *</label>
+                <input type="text" name="last_name" id="id_last_name" required placeholder="Enter your last name">
+                {% if form.last_name.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.last_name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_phone"><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="tel" name="phone" id="id_phone" placeholder="Enter your phone number">
+                {% if form.phone.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.phone.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password"><i class="fas fa-lock"></i> Password *</label>
+                <input type="password" name="password" id="id_password" required placeholder="Create a strong password">
+                <div class="password-strength" id="passwordStrength"></div>
+                {% if form.password.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_confirm_password"><i class="fas fa-lock"></i> Confirm Password *</label>
+                <input type="password" name="confirm_password" id="id_confirm_password" required placeholder="Re-enter your password">
+                <div class="password-match-error" id="passwordMatchError">Passwords do not match!</div>
+                {% if form.confirm_password.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.confirm_password.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+        </form>
+        
+        <div class="divider">
+            <span>OR</span>
+        </div>
+        
+        <a href="/accounts/google/login/?process=signup" class="google-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Continue with Google
+        </a>
+        
+        <div class="login-link">
+            Already have an account? <a href="{% url 'owner_login' %}">Login here</a>
+        </div>
+    </div>
+    
+    <script>
+        const password = document.getElementById('id_password');
+        const confirmPassword = document.getElementById('id_confirm_password');
+        const passwordStrength = document.getElementById('passwordStrength');
+        const passwordMatchError = document.getElementById('passwordMatchError');
+        const signupForm = document.getElementById('signupForm');
+        
+        // Password strength checker
+        password.addEventListener('input', function() {
+            const value = this.value;
+            let strength = '';
+            let className = '';
+            
+            if (value.length === 0) {
+                passwordStrength.style.display = 'none';
+                return;
+            }
+            
+            passwordStrength.style.display = 'block';
+            
+            if (value.length < 6) {
+                strength = 'Weak password';
+                className = 'weak';
+            } else if (value.length < 10) {
+                strength = 'Medium strength';
+                className = 'medium';
+            } else {
+                strength = 'Strong password';
+                className = 'strong';
+            }
+            
+            passwordStrength.textContent = strength;
+            passwordStrength.className = 'password-strength ' + className;
+        });
+        
+        // Password match checker
+        confirmPassword.addEventListener('input', function() {
+            if (this.value === '') {
+                passwordMatchError.style.display = 'none';
+                return;
+            }
+            
+            if (this.value !== password.value) {
+                passwordMatchError.style.display = 'block';
+                this.style.borderColor = '#CD5C5C';
+            } else {
+                passwordMatchError.style.display = 'none';
+                this.style.borderColor = '#28a745';
+            }
+        });
+        
+        // Form submission validation
+        signupForm.addEventListener('submit', function(e) {
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault();
+                alert('❌ Passwords do not match! Please check and try again.');
+                confirmPassword.focus();
+                return false;
+            }
+            
+            if (password.value.length < 6) {
+                e.preventDefault();
+                alert('❌ Password must be at least 6 characters long!');
+                password.focus();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

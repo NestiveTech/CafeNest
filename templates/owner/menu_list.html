@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Management - CafeNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f3e8;
+        }
+        
+        .navbar {
+            background: #8B4513;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 24px;
+        }
+        
+        .navbar .highlight {
+            color: #E2725B;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 4px solid #C37A67;
+        }
+        
+        .page-header h2 {
+            color: #8B4513;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #D74426;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(226, 114, 91, 0.3);
+        }
+        
+        .btn-category {
+            background: #8B4513;
+            color: white;
+        }
+        
+        .btn-category:hover {
+            background: #6B3410;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #A0522D;
+            color: white;
+            margin-left: 5px;
+        }
+        
+        .btn-secondary:hover {
+            background: #8B4513;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #CD5C5C;
+            color: white;
+            margin-left: 5px;
+        }
+        
+        .btn-danger:hover {
+            background: #B22222;
+            transform: translateY(-2px);
+        }
+        
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            overflow-x: auto;
+            border-top: 4px solid #C37A67;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #8B4513;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #DEC2AF;
+            color: #4a3728;
+        }
+        
+        tr:hover {
+            background: #FFF5E6;
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-available {
+            background: #C8E6C9;
+            color: #2E7D32;
+        }
+        
+        .badge-unavailable {
+            background: #FFCDD2;
+            color: #C62828;
+        }
+        
+        .badge-category {
+            background: #FFE0B2;
+            color: #E65100;
+        }
+        
+        .badge-global {
+            background: #E1F5F1;
+            color: #00695C;
+        }
+        
+        .price {
+            color: #E2725B;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+        
+        .alert-warning {
+            background: #FFE0B2;
+            color: #E65100;
+            border: 1px solid #FFCC80;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Cafe<span class="highlight">Nest</span></h1>
+        <div class="nav-links">
+            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+            <a href="{% url 'cafe_list' %}">Cafés</a>
+            <a href="{% url 'owner_table_list' %}">Tables</a>
+            <a href="{% url 'staff_list' %}">Staff</a>
+            <a href="{% url 'menu_list' %}">Menu</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'owner_logout' %}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h2>Menu Management</h2>
+            <div class="header-actions">
+                <a href="{% url 'add_category' %}" class="btn btn-category">+ Add Categories</a>
+                <a href="{% url 'add_menu_item' %}" class="btn btn-primary">+ Add Menu Item</a>
+            </div>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Café</th>
+                        <th>Status</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if menu_items %}
+                        {% for item in menu_items %}
+                        <tr>
+                            <td><strong>{{ item.name }}</strong></td>
+                            <td><span class="badge badge-category">{{ item.category.name }}</span></td>
+                            <td class="price">₹{{ item.price }}</td>
+                            <td>Available</td>
+                            <td>{{ item.cafe.name }}</td>
+                            <td>
+                                {% if item.is_available %}
+                                    <span class="badge badge-available">Available</span>
+                                {% else %}
+                                    <span class="badge badge-unavailable">Unavailable</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge badge-category">Café Specific</span>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="{% url 'edit_menu_item' item.pk %}" class="btn btn-secondary">Edit</a>
+                                    <form method="POST" action="{% url 'delete_menu_item' item.pk %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete {{ item.name }}?')">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: #8B4513;">No menu items found. Add your first item to get started.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

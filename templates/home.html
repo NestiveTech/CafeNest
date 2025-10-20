@@ -1,0 +1,1316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CafeNest - Complete Café Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-brown: #D2691E;
+            --dark-brown: #8B4513;
+            --light-cream: #fff8f0;
+            --accent-yellow: #fff3cd;
+            --text-dark: #2b2b2b;
+            --text-light: #666;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation Bar - Modern Glassmorphism */
+        .navbar {
+            background: linear-gradient(135deg, rgba(210, 105, 30, 0.95) 0%, rgba(139, 69, 19, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(210, 105, 30, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+        
+        .navbar-brand .highlight {
+            color: var(--accent-yellow);
+            font-weight: 800;
+        }
+        
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .navbar-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-yellow);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .navbar-menu a:hover::after {
+            width: 80%;
+        }
+        
+        .navbar-menu a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Navbar Buttons */
+        .navbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px !important;
+            border-radius: 10px !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar-btn i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .navbar-btn:hover i {
+            transform: scale(1.2);
+        }
+        
+        .admin-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .admin-btn:hover {
+            background: white !important;
+            color: var(--primary-brown) !important;
+            border-color: white;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        .employee-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+        
+        .employee-btn:hover {
+            background: white !important;
+            color: var(--primary-brown) !important;
+            border-color: white;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Employee Dropdown */
+        .employee-dropdown {
+            position: fixed;
+            top: 75px;
+            right: 50px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-15px);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 999;
+            border: 1px solid rgba(210, 105, 30, 0.1);
+        }
+        
+        .employee-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .dropdown-item i {
+            font-size: 18px;
+            color: var(--primary-brown);
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, var(--light-cream), #ffe4c4);
+            transform: translateX(8px);
+        }
+        
+        .dropdown-item:hover i {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .hamburger:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary-brown) 0%, var(--dark-brown) 100%);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            padding: 80px 30px 30px;
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .mobile-menu-items a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 15px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .mobile-menu-items a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .mobile-menu-items a i {
+            font-size: 20px;
+        }
+        
+        .mobile-menu-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 15px 0;
+        }
+        
+        .navbar-cta {
+            background: white !important;
+            color: var(--primary-brown) !important;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-cta:hover {
+            background: var(--accent-yellow) !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero Section - Enhanced with Gradient Mesh */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 50%, #654321 100%);
+            color: white;
+            padding: 150px 20px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 243, 205, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100"><path fill="rgba(255,255,255,1)" d="M0,50 C320,100 640,0 960,50 C1120,75 1280,25 1440,50 L1440,100 L0,100 Z"></path></svg>');
+            background-size: cover;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+            text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+            letter-spacing: -1px;
+        }
+        
+        .hero .highlight {
+            color: var(--accent-yellow);
+            position: relative;
+        }
+        
+        .hero .tagline {
+            font-size: 28px;
+            margin-bottom: 20px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .hero .description {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            opacity: 0.95;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.4s ease;
+        }
+        
+        .btn {
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: width 0.6s ease, height 0.6s ease;
+            transform: translate(-50%, -50%);
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn i {
+            font-size: 20px;
+            z-index: 1;
+        }
+        
+        .btn span {
+            z-index: 1;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary-brown);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-yellow);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-brown);
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        /* Trusted By - Modern Card Style */
+        .trusted-by {
+            padding: 70px 20px;
+            background: white;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .trusted-by h3 {
+            color: #999;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .trusted-logos {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .trusted-logos i {
+            font-size: 48px;
+            color: var(--primary-brown);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        
+        .trusted-logos i:hover {
+            opacity: 1;
+            transform: scale(1.2) rotate(5deg);
+        }
+        
+        /* Features - Enhanced Grid with Hover Effects */
+        .features {
+            padding: 120px 20px;
+            background: linear-gradient(180deg, white 0%, var(--light-cream) 100%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 52px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 80px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 24px;
+            padding: 45px 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(210, 105, 30, 0.08);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(210, 105, 30, 0.05) 0%, rgba(139, 69, 19, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(210, 105, 30, 0.2);
+            border-color: var(--primary-brown);
+        }
+        
+        .feature-icon {
+            font-size: 64px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .feature-title {
+            font-size: 26px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-description {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Benefits - Card Redesign */
+        .benefits {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, var(--light-cream) 0%, #ffe4c4 50%, var(--light-cream) 100%);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefit-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(210, 105, 30, 0.12);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(210, 105, 30, 0.25);
+            border-color: var(--primary-brown);
+        }
+        
+        .benefit-icon {
+            font-size: 56px;
+            margin-bottom: 25px;
+            color: var(--primary-brown);
+            transition: transform 0.4s ease;
+        }
+        
+        .benefit-item:hover .benefit-icon {
+            transform: scale(1.15) rotate(-10deg);
+        }
+        
+        .benefit-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+        
+        .benefit-description {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* Stats - Animated Counter Style */
+        .stats {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 50%, #654321 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 243, 205, 0.15) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-number {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            letter-spacing: -2px;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        /* CTA Section - Enhanced */
+        .cta-section {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 243, 205, 0.1) 0%, transparent 50%);
+            animation: rotate 15s linear infinite;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-content h2 {
+            font-size: 52px;
+            margin-bottom: 25px;
+            text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .cta-content p {
+            font-size: 22px;
+            margin-bottom: 45px;
+            opacity: 0.95;
+        }
+        
+        /* Footer - Modern Grid */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 80px 20px 30px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-section h3 {
+            color: var(--primary-brown);
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary-brown);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-brown);
+            transform: translateY(-5px);
+            border-color: var(--accent-yellow);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .copyright {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            /* Tablet - Show Hamburger */
+            .navbar {
+                padding: 15px 30px;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .navbar-menu {
+                display: none;
+            }
+            
+            .employee-dropdown {
+                right: 30px;
+            }
+            
+            .hero h1 {
+                font-size: 56px;
+            }
+            
+            .section-title {
+                font-size: 42px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Mobile */
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .navbar-brand {
+                font-size: 24px;
+            }
+            
+            .employee-dropdown {
+                right: 20px;
+                min-width: 200px;
+            }
+            
+            .hero {
+                padding: 120px 20px 80px;
+            }
+            
+            .hero h1 {
+                font-size: 42px;
+            }
+            
+            .hero .tagline {
+                font-size: 22px;
+            }
+            
+            .hero .description {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .section-subtitle {
+                font-size: 18px;
+            }
+            
+            .features-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-content h2 {
+                font-size: 36px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .stat-number {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="{% url 'home' %}" class="navbar-brand">
+                <i class="fas fa-coffee"></i>
+                Cafe<span class="highlight">Nest</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="navbar-menu">
+                <a href="#features">Features</a>
+                <a href="{% url 'owner_login' %}" class="navbar-btn admin-btn">
+                    <i class="fas fa-user-shield"></i> Admin
+                </a>
+                <a href="#" onclick="showEmployeeDropdown(event)" class="navbar-btn employee-btn">
+                    <i class="fas fa-users"></i> Employee
+                </a>
+            </div>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Employee Dropdown -->
+        <div class="employee-dropdown" id="employeeDropdown">
+            <a href="{% url 'manager_login' %}" class="dropdown-item">
+                <i class="fas fa-user-tie"></i> Manager Login
+            </a>
+            <a href="#" class="dropdown-item" onclick="alert('Staff/Cook login coming soon!')">
+                <i class="fas fa-utensils"></i> Cook Login
+            </a> 
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-items">
+            <a href="#features">
+                <i class="fas fa-star"></i> Features
+            </a>
+            <div class="mobile-menu-divider"></div>
+            <a href="{% url 'owner_login' %}">
+                <i class="fas fa-user-shield"></i> Admin Login
+            </a>
+            <a href="{% url 'manager_login' %}">
+                <i class="fas fa-user-tie"></i> Manager Login
+            </a>
+            <a href="#" onclick="alert('Staff/Cook login coming soon!')">
+                <i class="fas fa-utensils"></i> Cook Login
+            </a>
+            <div class="mobile-menu-divider"></div>
+            <a href="{% url 'owner_signup' %}" style="background: white; color: var(--primary-brown); font-weight: 700;">
+                <i class="fas fa-rocket"></i> Get Started
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Cafe<span class="highlight">Nest</span></h1>
+            <p class="tagline">Transform Your Café Business</p>
+            <p class="description">
+                The complete cloud-based solution for modern café management. Streamline operations, 
+                boost efficiency, and delight your customers with our powerful platform.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'owner_signup' %}" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    <span>Get Started</span>
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Watch Demo</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By -->
+    <section class="trusted-by">
+        <h3>Trusted by café owners worldwide</h3>
+        <div class="trusted-logos">
+            <i class="fas fa-coffee"></i>
+            <i class="fas fa-mug-hot"></i>
+            <i class="fas fa-cookie-bite"></i>
+            <i class="fas fa-ice-cream"></i>
+            <i class="fas fa-pizza-slice"></i>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">
+                Everything you need to manage your café efficiently
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Real-time Analytics</h3>
+                    <p class="feature-description">
+                        Track sales, monitor performance, and make data-driven decisions with comprehensive analytics.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">Staff Management</h3>
+                    <p class="feature-description">
+                        Manage your team with role-based access and attendance tracking seamlessly.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Order Management</h3>
+                    <p class="feature-description">
+                        Process orders seamlessly with intuitive interfaces designed for speed.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🍽️</div>
+                    <h3 class="feature-title">Menu Control</h3>
+                    <p class="feature-description">
+                        Manage menu items with dynamic pricing and real-time stock tracking.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">Billing & Invoicing</h3>
+                    <p class="feature-description">
+                        Generate professional bills with automatic calculations and tax handling.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Reports & Exports</h3>
+                    <p class="feature-description">
+                        Export detailed reports in PDF and Excel formats for better insights.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Choose CafeNest?</h2>
+            <p class="section-subtitle">
+                Join thousands of successful café owners
+            </p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="benefit-title">Lightning Fast</h3>
+                    <p class="benefit-description">Process orders in seconds</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="benefit-title">Mobile Ready</h3>
+                    <p class="benefit-description">Access anywhere, anytime</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon"><i class="fas fa-headset"></i></div>
+                    <h3 class="benefit-title">24/7 Support</h3>
+                    <p class="benefit-description">Expert support team</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="benefit-title">Growth Focused</h3>
+                    <p class="benefit-description">Scale your business</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">User Roles</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Cloud-Based</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Access Anytime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Scalable Growth</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Café?</h2>
+            <p>Join thousands of successful café owners today</p>
+            <div class="cta-buttons">
+                <a href="{% url 'owner_signup' %}" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    <span>Get Started Free</span>
+                </a>
+                <a href="{% url 'owner_login' %}" class="btn btn-secondary">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Login to Dashboard</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CafeNest</h3>
+                    <p>The complete café management solution for modern businesses.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <a href="#features">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Updates</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contact</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 CafeNest. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Employee Dropdown Toggle
+        function showEmployeeDropdown(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('employeeDropdown');
+            dropdown.classList.toggle('show');
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('employeeDropdown');
+            const employeeBtn = document.querySelector('.employee-btn');
+            
+            if (employeeBtn && !employeeBtn.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu-items a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (!this.getAttribute('onclick')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

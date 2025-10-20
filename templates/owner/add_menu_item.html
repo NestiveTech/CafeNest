@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if menu_item %}Edit{% else %}Add{% endif %} Menu Item - CafeNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f3e8;
+        }
+        
+        .navbar {
+            background: #8B4513;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 24px;
+        }
+        
+        .navbar .highlight {
+            color: #E2725B;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #E2725B;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+        }
+        
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            margin-bottom: 30px;
+            border-top: 4px solid #C37A67;
+        }
+        
+        .page-header h2 {
+            color: #8B4513;
+            margin-bottom: 10px;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            border-top: 4px solid #C37A67;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #4a3728;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #DEC2AF;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #E2725B;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #FFF5E6;
+            border-radius: 5px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 500;
+            color: #6B5347;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #D74426;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #8B4513;
+            color: white;
+            margin-left: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #6B3410;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .error {
+            color: #C62828;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+        
+        .alert-error {
+            background: #FFCDD2;
+            color: #C62828;
+            border: 1px solid #EF9A9A;
+        }
+        
+        .help-text {
+            font-size: 12px;
+            color: #8B7355;
+            margin-top: 5px;
+        }
+        
+        .required {
+            color: #E2725B;
+        }
+        
+        .category-link {
+            display: inline-block;
+            margin-top: 5px;
+            color: #8B4513;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        
+        .category-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Cafe<span class="highlight">Nest</span></h1>
+        <div class="nav-links">
+            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+            <a href="{% url 'cafe_list' %}">Cafés</a>
+            <a href="{% url 'owner_table_list' %}">Tables</a>
+            <a href="{% url 'staff_list' %}">Staff</a>
+            <a href="{% url 'menu_list' %}">Menu</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'owner_logout' %}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h2>{% if menu_item %}Edit Menu Item{% else %}Add New Menu Item{% endif %}</h2>
+            <p style="color: #6B5347; margin-top: 5px;">Fill in the details below to add a menu item</p>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data" id="menuItemForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="cafe">Select Café <span class="required">*</span></label>
+                    <select name="cafe" id="cafe" required>
+                        <option value="">-- Choose Café --</option>
+                        {% for cafe in form.cafe.field.queryset %}
+                            <option value="{{ cafe.id }}" {% if form.cafe.value == cafe.id|stringformat:"s" %}selected{% endif %}>
+                                {{ cafe.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.cafe.errors %}
+                        <div class="error">{{ form.cafe.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category <span class="required">*</span></label>
+                    <select name="category" id="category" required>
+                        <option value="">-- Select Café First --</option>
+                        {% if form.category.field.queryset %}
+                            {% for cat in form.category.field.queryset %}
+                                <option value="{{ cat.id }}" {% if form.category.value == cat.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ cat.name }}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <a href="{% url 'add_category' %}" class="category-link" target="_blank">+ Add New Category</a>
+                    {% if form.category.errors %}
+                        <div class="error">{{ form.category.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Item Name <span class="required">*</span></label>
+                    <input type="text" name="name" id="name" 
+                           value="{{ form.name.value|default:'' }}" 
+                           placeholder="e.g., Cappuccino, Burger, Pasta" required>
+                    {% if form.name.errors %}
+                        <div class="error">{{ form.name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" 
+                              placeholder="Describe the item (ingredients, preparation, etc.)">{{ form.description.value|default:'' }}</textarea>
+                    {% if form.description.errors %}
+                        <div class="error">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (₹) <span class="required">*</span></label>
+                    <input type="number" name="price" id="price" step="0.01" min="0"
+                           value="{{ form.price.value|default:'' }}" 
+                           placeholder="0.00" required>
+                    {% if form.price.errors %}
+                        <div class="error">{{ form.price.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Item Image</label>
+                    <input type="file" name="image" id="image" accept="image/*">
+                    {% if menu_item and menu_item.image %}
+                        <div class="help-text">Current image: {{ menu_item.image.name }}</div>
+                    {% endif %}
+                    {% if form.image.errors %}
+                        <div class="error">{{ form.image.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="is_available" id="is_available" 
+                               {% if form.is_available.value %}checked{% endif %}>
+                        <label for="is_available">Available for Sale</label>
+                    </div>
+                    <div class="help-text">Uncheck to temporarily hide this item from the menu</div>
+                    {% if form.is_available.errors %}
+                        <div class="error">{{ form.is_available.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        {% if menu_item %}Update Menu Item{% else %}Add Menu Item{% endif %}
+                    </button>
+                    <a href="{% url 'menu_list' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Dynamic category loading based on selected café
+        document.getElementById('cafe').addEventListener('change', function() {
+            const cafeId = this.value;
+            const categorySelect = document.getElementById('category');
+            
+            // Clear current options
+            categorySelect.innerHTML = '<option value="">Loading...</option>';
+            
+            if (!cafeId) {
+                categorySelect.innerHTML = '<option value="">-- Select Café First --</option>';
+                return;
+            }
+            
+            // Fetch categories for selected café
+            fetch(`/owner/api/categories/?cafe_id=${cafeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    categorySelect.innerHTML = '<option value="">-- Choose Category --</option>';
+                    
+                    if (data.categories && data.categories.length > 0) {
+                        data.categories.forEach(category => {
+                            const option = document.createElement('option');
+                            option.value = category.id;
+                            option.textContent = category.name;
+                            categorySelect.appendChild(option);
+                        });
+                    } else {
+                        categorySelect.innerHTML = '<option value="">No categories found</option>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    categorySelect.innerHTML = '<option value="">Error loading categories</option>';
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Management - CafeNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #D2691E, #8B4513);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 { font-size: 24px; }
+        .navbar .highlight { color: #fff3cd; }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .page-header h2 { color: #2b2b2b; }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #D2691E, #8B4513);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(210, 105, 30, 0.3);
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #2b2b2b;
+        }
+        
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #D2691E, #8B4513);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover { background: #fff8f0; }
+        
+        .badge {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #28a745;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Cafe<span class="highlight">Nest</span></h1>
+        <div class="nav-links">
+            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+            <a href="{% url 'cafe_list' %}">Cafés</a>
+            <a href="{% url 'owner_table_list' %}">Tables</a>
+            <a href="{% url 'staff_list' %}">Staff</a>
+            <a href="{% url 'menu_list' %}">Menu</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'owner_logout' %}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h2>Café Management</h2>
+            <a href="{% url 'add_cafe' %}" class="btn btn-primary">+ Add New Café</a>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Café ID</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Currency</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if cafes %}
+                        {% for cafe in cafes %}
+                        <tr>
+                            <td><strong>{{ cafe.cafe_id }}</strong></td>
+                            <td><strong>{{ cafe.name }}</strong></td>
+                            <td>{{ cafe.address|truncatewords:8 }}</td>
+                            <td>{{ cafe.contact }}</td>
+                            <td>
+                                {% if cafe.currency == 'INR' %}
+                                    ₹ INR
+                                {% elif cafe.currency == 'USD' %}
+                                    $ USD
+                                {% elif cafe.currency == 'EUR' %}
+                                    € EUR
+                                {% elif cafe.currency == 'GBP' %}
+                                    £ GBP
+                                {% else %}
+                                    {{ cafe.currency }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="POST" action="{% url 'toggle_cafe_status' cafe.pk %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" {% if cafe.is_active %}checked{% endif %} onchange="this.form.submit()">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </form>
+                                {% if cafe.is_active %}
+                                    <span class="badge badge-active">Active</span>
+                                {% else %}
+                                    <span class="badge badge-inactive">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="{% url 'edit_cafe' cafe.pk %}" class="btn btn-secondary">Edit</a>
+                                    <form method="POST" action="{% url 'delete_cafe' cafe.pk %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Delete {{ cafe.name }}?')">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: #666;">No cafés found. Add your first café to get started.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Logout Popup -->
+    <div class="logout-overlay" id="logoutOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="logout-popup" style="background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px;">
+            <h3 style="margin-bottom: 15px;">Confirm Logout</h3>
+            <p style="margin-bottom: 30px; color: #666;">Are you sure you want to logout?</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-secondary" onclick="closeLogoutPopup()">Cancel</button>
+                <form method="POST" action="{% url 'owner_logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Yes, Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showLogoutPopup(event) {
+            event.preventDefault();
+            document.getElementById('logoutOverlay').style.display = 'flex';
+        }
+        
+        function closeLogoutPopup() {
+            document.getElementById('logoutOverlay').style.display = 'none';
+        }
+        
+        document.getElementById('logoutOverlay').addEventListener('click', function(event) {
+            if (event.target === this) closeLogoutPopup();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management - CafeNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f3e8;
+        }
+        
+        .navbar {
+            background: #8B4513;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 24px;
+        }
+        
+        .navbar .highlight {
+            color: #E2725B;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #E2725B;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            margin-bottom: 30px;
+            border-top: 4px solid #C37A67;
+        }
+        
+        .page-header h2 {
+            color: #8B4513;
+            margin-bottom: 10px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .form-container, .categories-list {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            border-top: 4px solid #C37A67;
+        }
+        
+        .form-container h3, .categories-list h3 {
+            color: #8B4513;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #4a3728;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #DEC2AF;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #E2725B;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #E2725B;
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            background: #D74426;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #8B4513;
+            color: white;
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        
+        .btn-secondary:hover {
+            background: #6B3410;
+        }
+        
+        .btn-danger {
+            background: #CD5C5C;
+            color: white;
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        
+        .btn-danger:hover {
+            background: #B22222;
+        }
+        
+        .category-item {
+            background: #FFF5E6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #E2725B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-info h4 {
+            color: #8B4513;
+            margin-bottom: 5px;
+        }
+        
+        .category-info p {
+            color: #6B5347;
+            font-size: 13px;
+        }
+        
+        .category-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+        
+        .alert-error {
+            background: #FFCDD2;
+            color: #C62828;
+            border: 1px solid #EF9A9A;
+        }
+        
+        .cafe-badge {
+            background: #FFE0B2;
+            color: #E65100;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Cafe<span class="highlight">Nest</span></h1>
+        <div class="nav-links">
+            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+            <a href="{% url 'cafe_list' %}">Cafés</a>
+            <a href="{% url 'owner_table_list' %}">Tables</a>
+            <a href="{% url 'staff_list' %}">Staff</a>
+            <a href="{% url 'menu_list' %}">Menu</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'owner_logout' %}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h2>Category Management</h2>
+            <p style="color: #6B5347; margin-top: 5px;">Manage menu categories for your cafés</p>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="content-grid">
+            <!-- Add Category Form -->
+            <div class="form-container">
+                <h3>{% if category %}Edit Category{% else %}Add New Category{% endif %}</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="cafe">Select Café *</label>
+                        <select name="cafe" id="cafe" required>
+                            <option value="">-- Choose Café --</option>
+                            {% for cafe in cafes %}
+                                <option value="{{ cafe.id }}" {% if category and category.cafe.id == cafe.id %}selected{% endif %}>
+                                    {{ cafe.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Category Name *</label>
+                        <input type="text" name="name" id="name" 
+                               value="{% if category %}{{ category.name }}{% endif %}" 
+                               placeholder="e.g., Beverages, Main Course, Desserts" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" rows="4" 
+                                  placeholder="Optional description for this category">{% if category %}{{ category.description }}{% endif %}</textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        {% if category %}Update Category{% else %}Add Category{% endif %}
+                    </button>
+                    
+                    {% if category %}
+                    <a href="{% url 'add_category' %}" class="btn btn-secondary" style="width: 100%; margin-top: 10px; text-align: center;">Cancel Edit</a>
+                    {% endif %}
+                </form>
+            </div>
+            
+            <!-- Categories List -->
+            <div class="categories-list">
+                <h3>Existing Categories</h3>
+                
+                {% if categories %}
+                    {% for cat in categories %}
+                    <div class="category-item">
+                        <div class="category-info">
+                            <h4>{{ cat.name }}</h4>
+                            <p>{{ cat.description|default:"No description" }}</p>
+                            <span class="cafe-badge">{{ cat.cafe.name }}</span>
+                        </div>
+                        <div class="category-actions">
+                            <a href="{% url 'edit_category' cat.id %}" class="btn btn-secondary">Edit</a>
+                            <form method="POST" action="{% url 'delete_category' cat.id %}" style="display: inline;" 
+                                  onsubmit="return confirm('Delete {{ cat.name }}? Menu items will need reassignment.')">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="color: #8B4513; text-align: center; padding: 40px 0;">
+                        No categories found. Add your first category to get started!
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - CafeNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f3e8;
+        }
+        
+        .navbar {
+            background: #8B4513;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 24px;
+        }
+        
+        .navbar .highlight {
+            color: #E2725B;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .settings-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+            border-top: 4px solid #C37A67;
+        }
+        
+        .settings-container h2 {
+            color: #8B4513;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #6B2213;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #DEC2AF;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: #FFFAF5;
+            color: #4a3728;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #E2725B;
+            box-shadow: 0 0 0 3px rgba(226, 114, 91, 0.15);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #E2725B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #D74426;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(226, 114, 91, 0.3);
+        }
+        
+        .section-divider {
+            border-top: 2px solid #DEC2AF;
+            margin: 30px 0;
+        }
+        
+        .section-title {
+            color: #8B4513;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Cafe<span class="highlight">Nest</span></h1>
+        <div class="nav-links">
+            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+            <a href="{% url 'cafe_list' %}">Cafés</a>
+            <a href="{% url 'owner_table_list' %}">Tables</a>
+            <a href="{% url 'staff_list' %}">Staff</a>
+            <a href="{% url 'menu_list' %}">Menu</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'owner_logout' %}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="settings-container">
+            <h2>Owner Settings</h2>
+            
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <h3 class="section-title">Company Information</h3>
+                
+                <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                    <input type="text" id="company_name" name="company_name" value="{{ settings.company_name }}" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="support_email">Support Email</label>
+                        <input type="email" id="support_email" name="support_email" value="{{ settings.support_email }}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="support_phone">Support Phone</label>
+                        <input type="text" id="support_phone" name="support_phone" value="{{ settings.support_phone }}" required>
+                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <h3 class="section-title">Default Settings</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="default_currency">Default Currency</label>
+                        <input type="text" id="default_currency" name="default_currency" value="{{ settings.default_currency }}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="default_tax">Default Tax (%)</label>
+                        <input type="number" step="0.01" id="default_tax" name="default_tax" value="{{ settings.default_tax }}" required>
+                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
