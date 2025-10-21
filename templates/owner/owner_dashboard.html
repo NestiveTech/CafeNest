@@ -1,393 +1,667 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Dashboard - CafeNest</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f7f3e8;
-        }
-        
-        .navbar {
-            background: linear-gradient(135deg, #8B4513, #6B2213);
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .navbar h1 {
-            font-size: 24px;
-        }
-        
-        .navbar .highlight {
-            color: #E2725B;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-        
-        .nav-links a:hover {
-            background: rgba(226, 114, 91, 0.3);
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px;
-        }
-        
-        .dashboard-header {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            margin-bottom: 30px;
-            border-top: 4px solid #C37A67;
-        }
-        
-        .dashboard-header h2 {
-            color: #8B4513;
-            margin-bottom: 10px;
-        }
-        
-        .dashboard-header p {
-            color: #A0522D;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            border-left: 5px solid #E2725B;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(226, 114, 91, 0.2);
-        }
-        
-        .stat-card h3 {
-            color: #A0522D;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .stat-card .value {
-            color: #6B2213;
-            font-size: 32px;
-            font-weight: bold;
-        }
-        
-        .stat-card .currency {
-            color: #E2725B;
-        }
-        
-        .charts-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            margin-bottom: 30px;
-            border-top: 4px solid #C37A67;
-        }
-        
-        .charts-section h3 {
-            color: #8B4513;
-            margin-bottom: 20px;
-        }
-        
-        .cafes-list {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            border-top: 4px solid #C37A67;
-        }
-        
-        .cafes-list h3 {
-            color: #8B4513;
-            margin-bottom: 20px;
-        }
-        
-        .cafe-item {
-            padding: 15px;
-            border: 2px solid #DEC2AF;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-            background: #FFFAF5;
-        }
-        
-        .cafe-item:hover {
-            border-color: #E2725B;
-            background: #FFF5E6;
-            transform: translateX(5px);
-        }
-        
-        .cafe-item .cafe-info h4 {
-            color: #8B4513;
-            margin-bottom: 5px;
-        }
-        
-        .cafe-item .cafe-info p {
-            color: #A0522D;
-            font-size: 14px;
-        }
-        
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: #E2725B;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #D74426;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(226, 114, 91, 0.3);
-        }
-        
-        .btn-secondary {
-            background: #A0522D;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #8B4513;
-        }
-        
-        .messages {
-            margin-bottom: 20px;
-        }
-        
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .alert-success {
-            background: #C8E6C9;
-            color: #2E7D32;
-            border: 1px solid #A5D6A7;
-        }
-        
-        .alert-error {
-            background: #FFCDD2;
-            color: #C62828;
-            border: 1px solid #EF9A9A;
-        }
-        
-        canvas {
-            max-height: 400px;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Owner Dashboard - CafeNest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --primary-brown:#8B4513;
+      --dark-brown:#6B2213;
+      --accent-coral:#E2725B;
+      --tan:#DEC2AF;
+      --cream:#FFFAF5;
+      --text:#4a3728;
+      --sienna:#A0522D;
+    }
+
+    /* Smooth scroll + cross-browser scrollbar */
+    html{
+      scroll-behavior:smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-coral) var(--cream);
+      scrollbar-gutter: stable both-edges;
+    }
+    ::-webkit-scrollbar{ width:12px; height:12px; }
+    ::-webkit-scrollbar-track{
+      background: linear-gradient(180deg, var(--cream), var(--tan));
+      border-radius:10px;
+    }
+    ::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, var(--accent-coral), var(--primary-brown));
+      border-radius:10px;
+      border:2px solid var(--cream);
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:0 0 8px rgba(226,114,91,.4);
+    }
+
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f7f3e8 0%, #f1eadb 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow-x:hidden;
+    }
+
+    /* Navbar (glassy) */
+    .navbar{
+      position:fixed; inset:0 0 auto 0; height:70px;
+      background: linear-gradient(135deg, rgba(139,69,19,.92), rgba(107,34,19,.92));
+      color:#fff;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 10px 30px rgba(139,69,19,.25);
+      z-index:1000;
+    }
+
+    .nav-inner{
+      max-width:1400px; margin:0 auto; height:100%;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 30px;
+    }
+    .brand{
+      color:#fff; text-decoration:none; font-size:24px; font-weight:800; letter-spacing:-.3px;
+      transition: transform .25s ease; display:flex; align-items:center; gap:10px;
+    }
+    .brand i{ font-size:24px; }
+    .brand .highlight{ color:var(--accent-coral); }
+    .brand:hover{ transform: scale(1.03); }
+
+    .nav-links{ display:flex; gap:10px; align-items:center; }
+    .nav-links a{
+      color:#fff; text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:600;
+      transition: background .25s ease, transform .25s ease;
+    }
+    .nav-links a:hover{ background:rgba(255,255,255,.18); transform: translateY(-1px); }
+
+    /* Hamburger (tablet down) */
+    .hamburger{
+      display:none; width:44px; height:44px; border-radius:10px;
+      border:2px solid rgba(255,255,255,.35); background:rgba(255,255,255,.1);
+      align-items:center; justify-content:center; cursor:pointer;
+      transition: background .25s ease, border-color .25s ease;
+    }
+    .hamburger:hover{ background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.6); }
+    .hamburger span,
+    .hamburger span::before,
+    .hamburger span::after{
+      content:''; display:block; width:22px; height:2px; background:#fff; border-radius:2px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .hamburger span::before{ transform: translateY(-7px); }
+    .hamburger span::after{ transform: translateY(7px); }
+    .hamburger[aria-expanded="true"] span{ opacity:0; }
+    .hamburger[aria-expanded="true"] span::before{ transform: rotate(45deg); }
+    .hamburger[aria-expanded="true"] span::after{ transform: rotate(-45deg); }
+
+    /* Drawer + overlay */
+    .overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(4px);
+      opacity:0; pointer-events:none; transition: opacity .25s ease; z-index:999;
+    }
+    .overlay.active{ opacity:1; pointer-events:auto; }
+
+    .drawer{
+      position:fixed; top:0; right:-100%;
+      width:320px; max-width:88vw; height:100vh;
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:-10px 0 30px rgba(0,0,0,.35);
+      padding:90px 22px 22px;
+      transition:right .35s cubic-bezier(.68,-.55,.265,1.55);
+      z-index:1000; overflow-y:auto;
+    }
+    .drawer.active{ right:0; }
+    .drawer a{
+      display:flex; align-items:center; gap:10px; color:#fff; text-decoration:none;
+      padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08); font-weight:600; margin-bottom:10px;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .drawer a:hover{ transform: translateX(6px); background: rgba(255,255,255,.16); }
+
+    /* Page container */
+    .container{
+      max-width:1400px; margin:0 auto; padding:100px 30px 40px;
+    }
+
+    .dashboard-header{
+      background:#fff; padding:26px 30px; border-radius:18px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 18px 50px rgba(139,69,19,.12);
+      margin-bottom:26px;
+    }
+    .dashboard-header h2{ color:var(--primary-brown); font-weight:800; font-size:28px; letter-spacing:-.3px; margin-bottom:6px; }
+    .dashboard-header p{ color:var(--sienna); }
+
+    /* Messages */
+    .messages{ margin-bottom:18px; }
+    .alert{
+      padding:14px 18px; border-radius:12px; margin-bottom:10px; font-weight:600;
+      box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+    .alert-success{ background:#C8E6C9; color:#2E7D32; border:1px solid #A5D6A7; }
+    .alert-error{ background:#FFCDD2; color:#C62828; border:1px solid #EF9A9A; }
+
+    /* Stats grid */
+    .stats-grid{
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap:20px; margin-bottom:26px;
+    }
+
+    .stat-card{
+      background:#fff; padding:24px; border-radius:16px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 12px 40px rgba(139,69,19,.12);
+      border-left:5px solid var(--accent-coral);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .stat-card:hover{ transform: translateY(-5px); box-shadow:0 18px 50px rgba(226,114,91,.2); }
+    .stat-card h3{
+      color:var(--sienna); font-size:13px; font-weight:700; margin-bottom:10px; letter-spacing:.5px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .stat-card .value{ color:var(--dark-brown); font-size:32px; font-weight:800; }
+    .stat-card .currency{ color:var(--accent-coral); }
+
+    /* Charts section */
+    .charts-section{
+      background:#fff; padding:26px 30px; border-radius:18px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 18px 50px rgba(139,69,19,.12);
+      margin-bottom:26px;
+    }
+    .charts-section h3{
+      color:var(--primary-brown); margin-bottom:20px; font-weight:800; font-size:20px;
+      display:flex; align-items:center; gap:10px;
+    }
+
+    /* Cafes list */
+    .cafes-list{
+      background:#fff; padding:26px 30px; border-radius:18px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 18px 50px rgba(139,69,19,.12);
+    }
+    .cafes-list h3{
+      color:var(--primary-brown); margin-bottom:20px; font-weight:800; font-size:20px;
+      display:flex; align-items:center; gap:10px;
+    }
+
+    .cafe-item{
+      padding:16px; border:2px solid var(--tan); border-radius:12px; margin-bottom:12px;
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+      transition: all .3s ease; background:var(--cream);
+    }
+    .cafe-item:hover{ border-color:var(--accent-coral); background:#FFF5E6; transform: translateX(5px); }
+    .cafe-item .cafe-info h4{ color:var(--primary-brown); margin-bottom:5px; font-weight:700; }
+    .cafe-item .cafe-info p{ color:var(--sienna); font-size:14px; }
+
+    .btn{
+      padding:10px 18px; border:none; border-radius:10px; cursor:pointer; font-size:14px; font-weight:700;
+      transition: transform .2s ease, box-shadow .2s ease;
+      text-decoration:none; display:inline-block;
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, var(--accent-coral), var(--dark-brown)); color:#fff;
+      box-shadow:0 8px 24px rgba(226,114,91,.35);
+    }
+    .btn-primary:hover{ transform: translateY(-2px); box-shadow:0 12px 32px rgba(226,114,91,.45); }
+    .btn-secondary{ background:var(--sienna); color:#fff; }
+    .btn-secondary:hover{ background:var(--primary-brown); }
+
+    canvas{ max-height:400px; }
+
+    /* Responsive */
+    @media (max-width:1024px){
+      .nav-links{ display:none; }
+      .hamburger{ display:inline-flex; }
+      .container{ padding:96px 20px 32px; }
+    }
+    @media (max-width:768px){
+      .stats-grid{ grid-template-columns:1fr; }
+    }
+    /* ============================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   Works from 4K displays to mobile phones
+   ============================================ */
+
+/* Extra Large Desktop (1920px+) */
+@media (min-width: 1920px) {
+  .container { max-width: 1600px; }
+}
+
+/* Large Desktop (1440-1919px) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .container { max-width: 1400px; }
+}
+
+/* Standard Desktop (1200-1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .container { max-width: 1140px; padding: 100px 25px 40px; }
+}
+
+/* Laptop/Small Desktop (1024-1199px) - HAMBURGER STARTS */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .container { max-width: 960px; padding: 96px 20px 32px; }
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  
+  /* Adjust grids */
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .content-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+
+/* Tablet Portrait (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 20px 30px; }
+  
+  /* Single column layouts */
+  .content-grid,
+  .form-row,
+  .stats-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  
+  /* Adjust cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 24px 20px !important; border-radius: 16px !important; }
+  
+  /* Typography adjustments */
+  .page-header h2,
+  .form-container h2 { font-size: 24px !important; }
+  
+  /* Tables */
+  .table-container { overflow-x: auto; }
+  table { min-width: 600px; }
+  th, td { padding: 12px 10px !important; font-size: 13px !important; }
+}
+
+/* Mobile Large (640-767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 16px 24px; }
+  
+  /* Force single column */
+  .content-grid,
+  .form-row,
+  .stats-grid,
+  .table-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  
+  /* Compact cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 20px 16px !important; border-radius: 14px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 20px !important; }
+  .page-header h2 { font-size: 22px !important; }
+  
+  /* Buttons */
+  .btn { padding: 10px 18px !important; font-size: 13px !important; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn { width: 100%; }
+  
+  /* Tables - force scroll */
+  table { min-width: 550px; }
+  th, td { padding: 10px 8px !important; font-size: 12px !important; }
+}
+
+/* Mobile Medium (480-639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 85px 14px 20px; }
+  .nav-inner { padding: 0 20px; }
+  
+  /* Ultra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 18px 14px !important; border-radius: 12px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 18px !important; }
+  .page-header h2 { font-size: 20px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 28px !important; }
+  
+  /* Buttons full width */
+  .btn,
+  .btn-sm { width: 100%; justify-content: center; padding: 10px 16px !important; }
+  .actions,
+  .form-actions,
+  .header-actions { flex-direction: column; gap: 8px; }
+  
+  /* Tables */
+  table { min-width: 480px; }
+  th, td { padding: 8px 6px !important; font-size: 11px !important; }
+}
+
+/* Mobile Small (360-479px) */
+@media (min-width: 360px) and (max-width: 479px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 80px 12px 16px; }
+  .nav-inner { padding: 0 16px; }
+  
+  /* Extra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 16px 12px !important; border-radius: 10px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 16px !important; }
+  .hamburger { width: 40px !important; height: 40px !important; }
+  .page-header h2 { font-size: 18px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 24px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 10px 12px !important; font-size: 14px !important; }
+  
+  /* Buttons */
+  .btn { padding: 9px 14px !important; font-size: 12px !important; }
+  
+  /* Tables ultra compact */
+  table { min-width: 420px; }
+  th, td { padding: 6px 4px !important; font-size: 10px !important; }
+  .badge { font-size: 10px !important; padding: 4px 8px !important; }
+}
+
+/* Mobile Extra Small (320-359px) */
+@media (max-width: 359px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 75px 10px 12px; }
+  .nav-inner { padding: 0 12px; }
+  
+  /* Minimal spacing */
+  .form-container,
+  .table-container,
+  .page-header { padding: 14px 10px !important; border-radius: 8px !important; }
+  
+  /* Typography tiny */
+  .navbar h1,
+  .brand { font-size: 15px !important; }
+  .hamburger { width: 36px !important; height: 36px !important; }
+  .hamburger span { width: 18px !important; }
+  .page-header h2 { font-size: 16px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 22px !important; }
+  .stat-card p { font-size: 11px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 8px 10px !important; font-size: 13px !important; }
+  
+  /* Buttons minimal */
+  .btn { padding: 8px 12px !important; font-size: 11px !important; }
+  
+  /* Tables minimal */
+  table { min-width: 360px; }
+  th, td { padding: 5px 3px !important; font-size: 9px !important; }
+  .badge { font-size: 9px !important; padding: 3px 6px !important; }
+}
+
+/* ============================================
+   UNIVERSAL FIXES FOR ALL ELEMENTS
+   ============================================ */
+
+/* Prevent horizontal overflow */
+* {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Flexible containers */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 1023px) {
+  .btn,
+  .btn-sm,
+  button,
+  a[class*="btn"] {
+    min-height: 44px; /* Apple's recommended touch target */
+    touch-action: manipulation; /* Disable double-tap zoom */
+  }
+}
+
+/* Optimize drawer for all sizes */
+@media (max-width: 1023px) {
+  .drawer {
+    width: min(320px, 85vw);
+  }
+}
+
+/* Ensure stat cards stack nicely */
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <h1><i class="fas fa-coffee"></i> Cafe<span class="highlight">Nest</span></h1>
-        <div class="nav-links">
-            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
-            <a href="{% url 'cafe_list' %}">Cafés</a>
-            <a href="{% url 'owner_table_list' %}">Tables</a>
-            <a href="{% url 'staff_list' %}">Staff</a>
-            <a href="{% url 'menu_list' %}">Menu</a>
-            <a href="{% url 'reports' %}">Reports</a>
-            <a href="{% url 'owner_logout' %}">Logout</a>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <div class="dashboard-header">
-            <h2>👋 Welcome back, {{ user.first_name|default:"Owner" }}!</h2>
-            <p>Here's what's happening with your cafés today</p>
-        </div>
-        
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3><i class="fas fa-store"></i> TOTAL CAFÉS</h3>
-                <div class="value">{{ total_cafes|default:0 }}</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3><i class="fas fa-chair"></i> TOTAL TABLES</h3>
-                <div class="value">{{ total_tables|default:0 }}</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3><i class="fas fa-users"></i> TOTAL STAFF</h3>
-                <div class="value">{{ total_staff|default:0 }}</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3><i class="fas fa-user-tie"></i> MANAGERS</h3>
-                <div class="value">{{ total_managers|default:0 }}</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3><i class="fas fa-shopping-cart"></i> TODAY'S ORDERS</h3>
-                <div class="value">{{ today_orders|default:0 }}</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3><i class="fas fa-rupee-sign"></i> TODAY'S SALES</h3>
-                <div class="value currency">₹{{ today_sales|default:0|floatformat:2 }}</div>
-            </div>
-        </div>
-        
-        <div class="charts-section">
-            <h3><i class="fas fa-chart-line"></i> Sales Analytics (Last 7 Days)</h3>
-            <canvas id="salesChart"></canvas>
-        </div>
-        
-        <div class="cafes-list">
-            <h3><i class="fas fa-store-alt"></i> Your Cafés</h3>
-            {% if cafes %}
-                {% for cafe in cafes %}
-                <div class="cafe-item">
-                    <div class="cafe-info">
-                        <h4>{{ cafe.name }}</h4>
-                        <p><i class="fas fa-id-card"></i> {{ cafe.cafe_id }} | <i class="fas fa-map-marker-alt"></i> {{ cafe.address }}</p>
-                    </div>
-                    <a href="{% url 'edit_cafe' cafe.pk %}" class="btn btn-primary">
-                        <i class="fas fa-cog"></i> Manage
-                    </a>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p style="color: #A0522D;">
-                    <i class="fas fa-info-circle"></i> No cafés added yet. 
-                    <a href="{% url 'add_cafe' %}" style="color: #E2725B; font-weight: 600;">
-                        <i class="fas fa-plus"></i> Add your first café
-                    </a>
-                </p>
-            {% endif %}
-        </div>
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <a href="{% url 'owner_dashboard' %}" class="brand" aria-label="CafeNest">
+        <i class="fas fa-coffee"></i>
+        Cafe<span class="highlight">Nest</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+        <a href="{% url 'cafe_list' %}">Cafés</a>
+        <a href="{% url 'owner_table_list' %}">Tables</a>
+        <a href="{% url 'staff_list' %}">Staff</a>
+        <a href="{% url 'menu_list' %}">Menu</a>
+        <a href="{% url 'reports' %}">Reports</a>
+        <a href="{% url 'owner_logout' %}">Logout</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger"
+        aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <span></span>
+      </button>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('salesChart');
-        const labels = {{ last_7_days|safe }};
-        const salesData = {{ sales_data|safe }};
-        
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Sales (₹)',
-                    data: salesData,
-                    borderColor: '#E2725B',
-                    backgroundColor: 'rgba(226, 114, 91, 0.1)',
-                    borderWidth: 3,
-                    tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: '#D74426',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            color: '#8B4513',
-                            font: {
-                                size: 14,
-                                weight: '600'
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '₹' + value;
-                            },
-                            color: '#A0522D'
-                        },
-                        grid: {
-                            color: '#DEC2AF'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: '#A0522D'
-                        },
-                        grid: {
-                            color: '#DEC2AF'
-                        }
-                    }
-                }
+  </header>
+
+  <!-- Mobile overlay + drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="mobile-drawer" aria-hidden="true">
+    <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+    <a href="{% url 'cafe_list' %}">Cafés</a>
+    <a href="{% url 'owner_table_list' %}">Tables</a>
+    <a href="{% url 'staff_list' %}">Staff</a>
+    <a href="{% url 'menu_list' %}">Menu</a>
+    <a href="{% url 'reports' %}">Reports</a>
+    <a href="{% url 'owner_logout' %}">Logout</a>
+  </aside>
+
+  <!-- Page -->
+  <main class="container">
+    <section class="dashboard-header">
+      <h2>👋 Welcome back, {{ user.first_name|default:"Owner" }}!</h2>
+      <p>Here's what's happening with your cafés today</p>
+    </section>
+
+    {% if messages %}
+    <div class="messages" role="status" aria-live="polite">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3><i class="fas fa-store"></i> TOTAL CAFÉS</h3>
+        <div class="value">{{ total_cafes|default:0 }}</div>
+      </div>
+
+      <div class="stat-card">
+        <h3><i class="fas fa-chair"></i> TOTAL TABLES</h3>
+        <div class="value">{{ total_tables|default:0 }}</div>
+      </div>
+
+      <div class="stat-card">
+        <h3><i class="fas fa-users"></i> TOTAL STAFF</h3>
+        <div class="value">{{ total_staff|default:0 }}</div>
+      </div>
+
+      <div class="stat-card">
+        <h3><i class="fas fa-user-tie"></i> MANAGERS</h3>
+        <div class="value">{{ total_managers|default:0 }}</div>
+      </div>
+
+      <div class="stat-card">
+        <h3><i class="fas fa-shopping-cart"></i> TODAY'S ORDERS</h3>
+        <div class="value">{{ today_orders|default:0 }}</div>
+      </div>
+
+      <div class="stat-card">
+        <h3><i class="fas fa-rupee-sign"></i> TODAY'S SALES</h3>
+        <div class="value currency">₹{{ today_sales|default:0|floatformat:2 }}</div>
+      </div>
+    </div>
+
+    <section class="charts-section">
+      <h3><i class="fas fa-chart-line"></i> Sales Analytics (Last 7 Days)</h3>
+      <canvas id="salesChart"></canvas>
+    </section>
+
+    <section class="cafes-list">
+      <h3><i class="fas fa-store-alt"></i> Your Cafés</h3>
+      {% if cafes %}
+        {% for cafe in cafes %}
+        <div class="cafe-item">
+          <div class="cafe-info">
+            <h4>{{ cafe.name }}</h4>
+            <p><i class="fas fa-id-card"></i> {{ cafe.cafe_id }} | <i class="fas fa-map-marker-alt"></i> {{ cafe.address }}</p>
+          </div>
+          <a href="{% url 'edit_cafe' cafe.pk %}" class="btn btn-primary">
+            <i class="fas fa-cog"></i> Manage
+          </a>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p style="color:var(--sienna);">
+          <i class="fas fa-info-circle"></i> No cafés added yet. 
+          <a href="{% url 'add_cafe' %}" style="color:var(--accent-coral); font-weight:700;">
+            <i class="fas fa-plus"></i> Add your first café
+          </a>
+        </p>
+      {% endif %}
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Accessible hamburger drawer
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('overlay');
+
+    function setMenuState(open){
+      hamburger.setAttribute('aria-expanded', String(open));
+      drawer.classList.toggle('active', open);
+      overlay.classList.toggle('active', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if(open){
+        const firstLink = drawer.querySelector('a');
+        if(firstLink) firstLink.focus();
+      }
+    }
+
+    hamburger.addEventListener('click', ()=> setMenuState(hamburger.getAttribute('aria-expanded')!=='true'));
+    overlay.addEventListener('click', ()=> setMenuState(false));
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenuState(false); });
+
+    // Sales chart
+    const ctx = document.getElementById('salesChart');
+    const labels = {{ last_7_days|safe }};
+    const salesData = {{ sales_data|safe }};
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Sales (₹)',
+          data: salesData,
+          borderColor: '#E2725B',
+          backgroundColor: 'rgba(226, 114, 91, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true,
+          pointBackgroundColor: '#D74426',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              color: '#8B4513',
+              font: { size: 14, weight: '600' }
             }
-        });
-    </script>
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value){ return '₹' + value; },
+              color: '#A0522D'
+            },
+            grid: { color: '#DEC2AF' }
+          },
+          x: {
+            ticks: { color: '#A0522D' },
+            grid: { color: '#DEC2AF' }
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>

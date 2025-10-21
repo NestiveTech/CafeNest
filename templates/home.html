@@ -14,12 +14,44 @@
         }
         
         :root {
-            --primary-brown: #D2691E;
-            --dark-brown: #8B4513;
-            --light-cream: #fff8f0;
-            --accent-yellow: #fff3cd;
-            --text-dark: #2b2b2b;
-            --text-light: #666;
+            --primary-brown:#8B4513;
+            --dark-brown:#6B2213;
+            --accent-coral:#E2725B;
+            --accent-yellow:#fff3cd;
+            --tan:#DEC2AF;
+            --cream:#FFFAF5;
+            --light-cream:#FFF5E6;
+            --text:#4a3728;
+            --text-dark:#2b2b2b;
+            --text-light:#666;
+        }
+        
+        /* Custom Scrollbar */
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-coral) var(--cream);
+            scrollbar-gutter: stable both-edges;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, var(--cream), var(--tan));
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-coral), var(--primary-brown));
+            border-radius: 10px;
+            border: 2px solid var(--cream);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+            box-shadow: 0 0 8px rgba(226, 114, 91, 0.4);
         }
         
         body {
@@ -66,7 +98,7 @@
         }
         
         .navbar-brand .highlight {
-            color: var(--accent-yellow);
+            color: var(--accent-coral);
             font-weight: 800;
         }
         
@@ -94,7 +126,7 @@
             left: 50%;
             width: 0;
             height: 2px;
-            background: var(--accent-yellow);
+            background: var(--accent-coral);
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
@@ -335,7 +367,7 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
         
-        /* Hero Section - Enhanced with Gradient Mesh */
+        /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 50%, #654321 100%);
             color: white;
@@ -388,7 +420,7 @@
         }
         
         .hero .highlight {
-            color: var(--accent-yellow);
+            color: var(--accent-coral);
             position: relative;
         }
         
@@ -452,11 +484,7 @@
             height: 300px;
         }
         
-        .btn i {
-            font-size: 20px;
-            z-index: 1;
-        }
-        
+        .btn i,
         .btn span {
             z-index: 1;
         }
@@ -468,7 +496,8 @@
         }
         
         .btn-primary:hover {
-            background: var(--accent-yellow);
+            background: var(--accent-coral);
+            color: white;
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
@@ -486,7 +515,7 @@
             transform: translateY(-3px) scale(1.05);
         }
         
-        /* Trusted By - Modern Card Style */
+        /* Trusted By */
         .trusted-by {
             padding: 70px 20px;
             background: white;
@@ -522,7 +551,7 @@
             transform: scale(1.2) rotate(5deg);
         }
         
-        /* Features - Enhanced Grid with Hover Effects */
+        /* Features */
         .features {
             padding: 120px 20px;
             background: linear-gradient(180deg, white 0%, var(--light-cream) 100%);
@@ -622,7 +651,7 @@
             z-index: 1;
         }
         
-        /* Benefits - Card Redesign */
+        /* Benefits */
         .benefits {
             padding: 120px 20px;
             background: linear-gradient(135deg, var(--light-cream) 0%, #ffe4c4 50%, var(--light-cream) 100%);
@@ -676,7 +705,7 @@
             line-height: 1.6;
         }
         
-        /* Stats - Animated Counter Style */
+        /* Stats */
         .stats {
             padding: 100px 20px;
             background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 50%, #654321 100%);
@@ -715,7 +744,7 @@
         .stat-number {
             font-size: 64px;
             font-weight: 800;
-            color: var(--accent-yellow);
+            color: var(--accent-coral);
             margin-bottom: 15px;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             letter-spacing: -2px;
@@ -728,7 +757,7 @@
             letter-spacing: 1px;
         }
         
-        /* CTA Section - Enhanced */
+        /* CTA Section */
         .cta-section {
             padding: 120px 20px;
             background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 100%);
@@ -768,7 +797,7 @@
             opacity: 0.95;
         }
         
-        /* Footer - Modern Grid */
+        /* Footer */
         .footer {
             background: #1a1a1a;
             color: white;
@@ -805,7 +834,7 @@
         }
         
         .footer-section a:hover {
-            color: var(--primary-brown);
+            color: var(--accent-coral);
             transform: translateX(5px);
         }
         
@@ -830,7 +859,7 @@
         .social-links a:hover {
             background: var(--primary-brown);
             transform: translateY(-5px);
-            border-color: var(--accent-yellow);
+            border-color: var(--accent-coral);
         }
         
         .footer-bottom {
@@ -869,7 +898,6 @@
         
         /* Responsive Design */
         @media (max-width: 1024px) {
-            /* Tablet - Show Hamburger */
             .navbar {
                 padding: 15px 30px;
             }
@@ -896,7 +924,6 @@
         }
         
         @media (max-width: 768px) {
-            /* Mobile */
             .navbar {
                 padding: 15px 20px;
             }
@@ -958,6 +985,11 @@
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -971,6 +1003,10 @@
             
             .stat-number {
                 font-size: 48px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>

@@ -1,255 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if cafe %}Edit{% else %}Add{% endif %} Café - CafeNest</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f7f3e8;
-        }
-        
-        .navbar {
-            background: #8B4513;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar h1 {
-            font-size: 24px;
-        }
-        
-        .navbar .highlight {
-            color: #E2725B;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        
-        .nav-links a:hover {
-            background: #E2725B;
-            color: white;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px;
-        }
-        
-        .form-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            border-top: 4px solid #C37A67;
-        }
-        
-        .form-container h2 {
-            color: #8B4513;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #6B2213;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #DEC2AF;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-family: inherit;
-            background: #FFFAF5;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #E2725B;
-            box-shadow: 0 0 0 3px rgba(226, 114, 91, 0.15);
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: #E2725B;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #D74426;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(226, 114, 91, 0.3);
-        }
-        
-        .btn-secondary {
-            background: #A0522D;
-            color: white;
-            margin-left: 10px;
-        }
-        
-        .btn-secondary:hover {
-            background: #8B4513;
-        }
-        
-        .form-actions {
-            margin-top: 30px;
-            display: flex;
-        }
-        
-        .errorlist {
-            color: #CD5C5C;
-            list-style: none;
-            font-size: 13px;
-            margin-top: 5px;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% if cafe %}Edit{% else %}Add{% endif %} Café - CafeNest</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --primary-brown:#8B4513;
+      --dark-brown:#6B2213;
+      --accent-coral:#E2725B;
+      --tan:#DEC2AF;
+      --cream:#FFFAF5;
+      --text:#4a3728;
+    }
+
+    /* Smooth in-page scroll and stable gutter */
+    html{
+      scroll-behavior:smooth;              /* smooth anchor scrolling */
+      scrollbar-width: thin;               /* Firefox thickness */
+      scrollbar-color: var(--accent-coral) var(--cream); /* Firefox colors */
+    } /* improves perceived polish on admin forms [web:60][web:67] */
+
+    /* WebKit scrollbars */
+    ::-webkit-scrollbar{ width:12px; height:12px; } /* size [web:62] */
+    ::-webkit-scrollbar-track{
+      background: linear-gradient(180deg, var(--cream), var(--tan));
+      border-radius:10px;
+    } /* themed track [web:62] */
+    ::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, var(--accent-coral), var(--primary-brown));
+      border-radius:10px;
+      border:2px solid var(--cream);
+    } /* themed thumb [web:62] */
+    ::-webkit-scrollbar-thumb:hover{
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:0 0 8px rgba(226,114,91,.4);
+    } /* hover feedback [web:62] */
+
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f7f3e8 0%, #f1eadb 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow-x:hidden;
+      scrollbar-gutter: stable both-edges; /* prevent layout shift [web:69] */
+    }
+
+    /* Navbar: modern glass + depth */
+    .navbar{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:70px;
+      background: linear-gradient(135deg, rgba(139,69,19,.92), rgba(107,34,19,.92));
+      color:#fff;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 10px 30px rgba(139,69,19,.25);
+      z-index:1000;
+    } /* modern glass navbar common in 2025 admin UIs [web:56][web:59] */
+
+    .nav-inner{
+      max-width:1200px;
+      margin:0 auto;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 24px;
+    }
+
+    .brand{
+      color:#fff;
+      text-decoration:none;
+      font-size:24px;
+      font-weight:800;
+      letter-spacing:-.3px;
+      transition:transform .25s ease;
+    }
+    .brand .highlight{ color:var(--accent-coral); } /* accent brand [web:41] */
+    .brand:hover{ transform:scale(1.03); } /* micro-interaction [web:41] */
+
+    .nav-links{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .nav-links a{
+      color:#fff;
+      text-decoration:none;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:600;
+      transition:background .25s ease, transform .25s ease;
+    }
+    .nav-links a:hover{
+      background:rgba(255,255,255,.18);
+      transform:translateY(-1px);
+    } /* clearer affordance [web:59] */
+
+    /* Hamburger */
+    .hamburger{
+      display:none;
+      width:44px;height:44px;
+      border-radius:10px;
+      border:2px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,.1);
+      align-items:center;justify-content:center;
+      cursor:pointer;
+      transition:background .25s ease, border-color .25s ease;
+    }
+    .hamburger:hover{
+      background:rgba(255,255,255,.2);
+      border-color:rgba(255,255,255,.6);
+    }
+    .hamburger span,
+    .hamburger span::before,
+    .hamburger span::after{
+      content:'';
+      display:block;
+      width:22px;height:2px;background:#fff;border-radius:2px;
+      transition:transform .25s ease, opacity .25s ease;
+    }
+    .hamburger span::before{ transform: translateY(-7px); }
+    .hamburger span::after{ transform: translateY(7px); }
+    .hamburger[aria-expanded="true"] span{ opacity:0; }
+    .hamburger[aria-expanded="true"] span::before{ transform: rotate(45deg); }
+    .hamburger[aria-expanded="true"] span::after{ transform: rotate(-45deg); } /* icon morph [web:6] */
+
+    /* Drawer + overlay (mobile nav) */
+    .overlay{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      opacity:0;pointer-events:none;
+      transition:opacity .25s ease;
+      z-index:999;
+    }
+    .overlay.active{ opacity:1; pointer-events:auto; } /* focus trap surface [web:46] */
+
+    .drawer{
+      position:fixed;top:0;right:-100%;
+      width:320px;max-width:88vw;height:100vh;
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:-10px 0 30px rgba(0,0,0,.35);
+      padding:90px 22px 22px;
+      transition:right .35s cubic-bezier(.68,-.55,.265,1.55);
+      z-index:1000;
+      overflow-y:auto;
+    }
+    .drawer.active{ right:0; } /* slide-in drawer [web:6] */
+    .drawer a{
+      display:flex;align-items:center;gap:10px;
+      color:#fff;text-decoration:none;
+      padding:12px 14px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      font-weight:600;margin-bottom:10px;
+      transition:transform .2s ease, background .2s ease;
+    }
+    .drawer a:hover{ transform: translateX(6px); background:rgba(255,255,255,.16); } /* affordance [web:68] */
+
+    /* Page layout */
+    .container{
+      max-width:900px;
+      margin:0 auto;
+      padding:100px 24px 40px; /* leave space for fixed navbar */
+    }
+
+    /* Card: elevated form shell */
+    .form-container{
+      background:#fff;
+      border-radius:20px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:
+        0 18px 50px rgba(139,69,19,.18),
+        0 0 0 1px rgba(255,255,255,.2);
+      padding:36px 30px;
+      position:relative;
+      overflow:hidden;
+      animation: rise .45s ease both;
+    } /* clean admin elevation [web:56][web:59] */
+    @keyframes rise{ from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+    .form-container h2{
+      color:var(--primary-brown);
+      margin-bottom:22px;
+      font-size:26px;
+      font-weight:800;
+      letter-spacing:-.3px;
+    }
+
+    .form-group{ margin-bottom:18px; }
+    .form-group label{
+      display:block;color:var(--dark-brown);
+      font-weight:700;margin-bottom:8px;font-size:14px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select{
+      width:100%;
+      padding:13px 15px;
+      border:2px solid var(--tan);
+      border-radius:12px;
+      font-size:15px;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+      background:#fff;
+      color:var(--text);
+      font-family:inherit;
+    }
+    .form-group textarea{ min-height:110px; resize:vertical; }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus{
+      outline:none;
+      border-color:var(--accent-coral);
+      box-shadow:0 0 0 4px rgba(226,114,91,.16);
+      transform: translateY(-1px);
+    } /* crisp focus state for usability [web:59] */
+
+    .form-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+    } /* two-column admin rows [web:56] */
+
+    .btn{
+      padding:13px 22px;border:none;border-radius:12px;
+      cursor:pointer;font-size:15px;font-weight:800;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+      text-decoration:none;display:inline-block;
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, var(--accent-coral), var(--primary-brown));
+      color:#fff; box-shadow:0 10px 26px rgba(226,114,91,.35);
+    }
+    .btn-primary:hover{ transform: translateY(-2px); box-shadow:0 16px 34px rgba(226,114,91,.45); } /* CTA emphasis [web:59] */
+
+    .btn-secondary{
+      background:#A0522D;color:#fff;margin-left:10px;
+    }
+    .btn-secondary:hover{ background:#8B4513; } /* secondary affordance [web:56] */
+
+    .form-actions{ margin-top:24px; display:flex; flex-wrap:wrap; }
+
+    .errorlist{
+      color:#CD5C5C; list-style:none; font-size:13px; margin-top:6px; padding-left:0;
+    } /* clear error text [web:65] */
+
+    /* Responsive */
+    @media (max-width:1024px){
+      .nav-links{ display:none; } /* swap to hamburger at tablet [web:6] */
+      .hamburger{ display:inline-flex; }
+      .container{ padding:96px 20px 32px; }
+    }
+    @media (max-width:680px){
+      .form-row{ grid-template-columns:1fr; } /* stack fields on small screens [web:56] */
+      .form-container{ padding:28px 22px; border-radius:16px; }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <h1>Cafe<span class="highlight">Nest</span></h1>
-        <div class="nav-links">
-            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
-            <a href="{% url 'cafe_list' %}">Cafés</a>
-            <a href="{% url 'staff_list' %}">Staff</a>
-            <a href="{% url 'menu_list' %}">Menu</a>
-            <a href="{% url 'reports' %}">Reports</a>
-            <a href="{% url 'owner_settings' %}">Settings</a>
-            <a href="{% url 'owner_logout' %}">Logout</a>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <div class="form-container">
-            <h2>{% if cafe %}Edit Café{% else %}Add New Café{% endif %}</h2>
-            
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label for="{{ form.name.id_for_label }}">Café Name *</label>
-                    {{ form.name }}
-                    {{ form.name.errors }}
-                </div>
-                
-                <div class="form-group">
-                    <label for="{{ form.address.id_for_label }}">Address *</label>
-                    {{ form.address }}
-                    {{ form.address.errors }}
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="{{ form.contact.id_for_label }}">Contact Number *</label>
-                        {{ form.contact }}
-                        {{ form.contact.errors }}
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="{{ form.logo.id_for_label }}">Logo</label>
-                        {{ form.logo }}
-                        {{ form.logo.errors }}
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="{{ form.open_time.id_for_label }}">Opening Time *</label>
-                        {{ form.open_time }}
-                        {{ form.open_time.errors }}
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="{{ form.close_time.id_for_label }}">Closing Time *</label>
-                        {{ form.close_time }}
-                        {{ form.close_time.errors }}
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="{{ form.tax_percentage.id_for_label }}">Tax Percentage (%)</label>
-                        {{ form.tax_percentage }}
-                        {{ form.tax_percentage.errors }}
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="{{ form.currency.id_for_label }}">Currency</label>
-                        {{ form.currency }}
-                        {{ form.currency.errors }}
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="{{ form.billing_header.id_for_label }}">Billing Header</label>
-                    {{ form.billing_header }}
-                    {{ form.billing_header.errors }}
-                </div>
-                
-                <div class="form-group">
-                    <label for="{{ form.billing_footer.id_for_label }}">Billing Footer</label>
-                    {{ form.billing_footer }}
-                    {{ form.billing_footer.errors }}
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">{% if cafe %}Update Café{% else %}Add Café{% endif %}</button>
-                    <a href="{% url 'cafe_list' %}" class="btn btn-secondary">Cancel</a>
-                </div>
-            </form>
-        </div>
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <a href="{% url 'owner_dashboard' %}" class="brand" aria-label="CafeNest">
+        Cafe<span class="highlight">Nest</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+        <a href="{% url 'cafe_list' %}">Cafés</a>
+        <a href="{% url 'staff_list' %}">Staff</a>
+        <a href="{% url 'menu_list' %}">Menu</a>
+        <a href="{% url 'reports' %}">Reports</a>
+        <a href="{% url 'owner_settings' %}">Settings</a>
+        <a href="{% url 'owner_logout' %}">Logout</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger"
+        aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <span></span>
+      </button>
     </div>
+  </header>
+
+  <!-- Mobile overlay + drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="mobile-drawer" aria-hidden="true">
+    <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+    <a href="{% url 'cafe_list' %}">Cafés</a>
+    <a href="{% url 'staff_list' %}">Staff</a>
+    <a href="{% url 'menu_list' %}">Menu</a>
+    <a href="{% url 'reports' %}">Reports</a>
+    <a href="{% url 'owner_settings' %}">Settings</a>
+    <a href="{% url 'owner_logout' %}">Logout</a>
+  </aside>
+
+  <!-- Page -->
+  <main class="container" id="main">
+    <section class="form-container" aria-labelledby="form-title">
+      <h2 id="form-title">{% if cafe %}Edit Café{% else %}Add New Café{% endif %}</h2>
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="{{ form.name.id_for_label }}">Café Name *</label>
+          {{ form.name }}
+          {{ form.name.errors }}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.address.id_for_label }}">Address *</label>
+          {{ form.address }}
+          {{ form.address.errors }}
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="{{ form.contact.id_for_label }}">Contact Number *</label>
+            {{ form.contact }}
+            {{ form.contact.errors }}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.logo.id_for_label }}">Logo</label>
+            {{ form.logo }}
+            {{ form.logo.errors }}
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="{{ form.open_time.id_for_label }}">Opening Time *</label>
+            {{ form.open_time }}
+            {{ form.open_time.errors }}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.close_time.id_for_label }}">Closing Time *</label>
+            {{ form.close_time }}
+            {{ form.close_time.errors }}
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="{{ form.tax_percentage.id_for_label }}">Tax Percentage (%)</label>
+            {{ form.tax_percentage }}
+            {{ form.tax_percentage.errors }}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.currency.id_for_label }}">Currency</label>
+            {{ form.currency }}
+            {{ form.currency.errors }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.billing_header.id_for_label }}">Billing Header</label>
+          {{ form.billing_header }}
+          {{ form.billing_header.errors }}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.billing_footer.id_for_label }}">Billing Footer</label>
+          {{ form.billing_footer }}
+          {{ form.billing_footer.errors }}
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">{% if cafe %}Update Café{% else %}Add Café{% endif %}</button>
+          <a href="{% url 'cafe_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Accessible hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('overlay');
+
+    function setMenuState(open){
+      hamburger.setAttribute('aria-expanded', String(open));
+      drawer.classList.toggle('active', open);
+      overlay.classList.toggle('active', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if(open){
+        // focus first link for keyboard users
+        const firstLink = drawer.querySelector('a');
+        if(firstLink) firstLink.focus();
+      }
+    } /* aligns with accessible patterns [web:46][web:68] */
+
+    hamburger.addEventListener('click', ()=> setMenuState(hamburger.getAttribute('aria-expanded')!=='true'));
+    overlay.addEventListener('click', ()=> setMenuState(false));
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenuState(false); }); /* esc to close [web:46] */
+  </script>
 </body>
 </html>

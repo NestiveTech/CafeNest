@@ -1,225 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Table - CafeNest Owner</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-        }
-        
-        .navbar {
-            background: linear-gradient(135deg, #8B4513, #6B2213);
-            color: white;
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar h1 {
-            font-size: 24px;
-        }
-        
-        .navbar .highlight {
-            color: #E2725B;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #8B4513;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        
-        .form-card {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .form-card h2 {
-            color: #2b2b2b;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #2b2b2b;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #8B4513;
-            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #8B4513, #6B2213);
-            color: white;
-            flex: 1;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(107, 34, 19, 0.3);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-        
-        .messages {
-            margin-bottom: 20px;
-        }
-        
-        .alert {
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .form-hint {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Table - CafeNest Owner</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --primary-brown:#8B4513;
+      --dark-brown:#6B2213;
+      --accent-coral:#E2725B;
+      --tan:#DEC2AF;
+      --cream:#FFFAF5;
+      --text:#2b2b2b;
+      --muted:#666;
+    }
+
+    /* Smooth scroll + cross-browser scrollbar */
+    html{
+      scroll-behavior:smooth;                               /* smooth anchor scroll */
+      scrollbar-width: thin;                                /* Firefox thickness [web:67] */
+      scrollbar-color: var(--accent-coral) var(--cream);    /* Firefox colors [web:66] */
+    }
+    /* WebKit scrollbar */
+    ::-webkit-scrollbar{ width:12px; height:12px; }         /* size [web:62] */
+    ::-webkit-scrollbar-track{
+      background: linear-gradient(180deg, var(--cream), var(--tan));
+      border-radius:10px;
+    }
+    ::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, var(--accent-coral), var(--primary-brown));
+      border-radius:10px;
+      border:2px solid var(--cream);
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:0 0 8px rgba(226,114,91,.4);
+    }
+
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f7f3e8 0%, #f1eadb 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow-x:hidden;
+      scrollbar-gutter: stable both-edges;                  /* avoid layout shift [web:69] */
+    }
+
+    /* Navbar (glassy, elevated) */
+    .navbar{
+      position:fixed; inset:0 0 auto 0; height:70px;
+      background: linear-gradient(135deg, rgba(139,69,19,.92), rgba(107,34,19,.92));
+      color:#fff;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 10px 30px rgba(139,69,19,.25);
+      z-index:1000;
+    }
+
+    .nav-inner{
+      max-width:1200px; margin:0 auto; height:100%;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 24px;
+    }
+    .brand{
+      color:#fff; text-decoration:none; font-size:24px; font-weight:800; letter-spacing:-.3px;
+      transition: transform .25s ease;
+    }
+    .brand .highlight{ color:var(--accent-coral); }
+    .brand:hover{ transform: scale(1.03); }
+
+    .nav-links{ display:flex; gap:10px; align-items:center; }
+    .nav-links a{
+      color:#fff; text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:600;
+      transition: background .25s ease, transform .25s ease;
+    }
+    .nav-links a:hover{ background:rgba(255,255,255,.18); transform: translateY(-1px); }
+
+    /* Hamburger (tablet down) */
+    .hamburger{
+      display:none; width:44px; height:44px; border-radius:10px;
+      border:2px solid rgba(255,255,255,.35); background:rgba(255,255,255,.1);
+      align-items:center; justify-content:center; cursor:pointer;
+      transition: background .25s ease, border-color .25s ease;
+    }
+    .hamburger:hover{ background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.6); }
+    .hamburger span,
+    .hamburger span::before,
+    .hamburger span::after{
+      content:''; display:block; width:22px; height:2px; background:#fff; border-radius:2px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .hamburger span::before{ transform: translateY(-7px); }
+    .hamburger span::after{ transform: translateY(7px); }
+    .hamburger[aria-expanded="true"] span{ opacity:0; }
+    .hamburger[aria-expanded="true"] span::before{ transform: rotate(45deg); }
+    .hamburger[aria-expanded="true"] span::after{ transform: rotate(-45deg); }
+
+    /* Drawer + overlay */
+    .overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(4px);
+      opacity:0; pointer-events:none; transition: opacity .25s ease; z-index:999;
+    }
+    .overlay.active{ opacity:1; pointer-events:auto; }
+
+    .drawer{
+      position:fixed; top:0; right:-100%;
+      width:320px; max-width:88vw; height:100vh;
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:-10px 0 30px rgba(0,0,0,.35);
+      padding:90px 22px 22px;
+      transition:right .35s cubic-bezier(.68,-.55,.265,1.55);
+      z-index:1000; overflow-y:auto;
+    }
+    .drawer.active{ right:0; }
+    .drawer a{
+      display:flex; align-items:center; gap:10px; color:#fff; text-decoration:none;
+      padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08); font-weight:600; margin-bottom:10px;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .drawer a:hover{ transform: translateX(6px); background: rgba(255,255,255,.16); }
+
+    /* Page container */
+    .container{
+      max-width:680px; margin:0 auto; padding:100px 24px 40px;
+    }
+
+    .back-link{
+      display:inline-flex; align-items:center; gap:8px; color:var(--primary-brown);
+      text-decoration:none; margin-bottom:20px; font-weight:700; transition: transform .2s ease;
+    }
+    .back-link:hover{ transform: translateX(-4px); text-decoration:underline; }
+
+    /* Messages */
+    .messages{ margin-bottom:18px; }
+    .alert{
+      padding:14px 18px; border-radius:12px; margin-bottom:10px; font-weight:600;
+      box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+    .alert-error{ background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; }
+    .alert-success{ background:#C8E6C9; color:#2E7D32; border:1px solid #A5D6A7; }
+
+    /* Form card */
+    .form-card{
+      background:#fff; padding:36px 32px; border-radius:18px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 18px 50px rgba(139,69,19,.12);
+    }
+
+    .form-card h2{
+      color:var(--text); margin-bottom:24px; font-size:26px; font-weight:800; letter-spacing:-.2px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .form-card h2 i{ color:var(--accent-coral); }
+
+    .form-group{ margin-bottom:20px; }
+    .form-group label{
+      display:block; color:var(--text); font-weight:700; margin-bottom:8px; font-size:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .form-group label i{ color:var(--accent-coral); font-size:16px; }
+
+    .form-group input,
+    .form-group select{
+      width:100%; padding:13px 15px; border:2px solid #ddd; border-radius:12px; font-size:15px;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+      background:#fff; color:var(--text);
+    }
+    .form-group input:focus,
+    .form-group select:focus{
+      outline:none; border-color:var(--primary-brown); box-shadow:0 0 0 4px rgba(139,69,19,.12);
+      transform: translateY(-1px);
+    }
+
+    .form-hint{ font-size:12px; color:var(--muted); margin-top:6px; }
+
+    .form-actions{ display:flex; gap:12px; margin-top:26px; flex-wrap:wrap; }
+
+    .btn{
+      padding:13px 20px; border:none; border-radius:12px; cursor:pointer; font-size:15px; font-weight:800;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, var(--primary-brown), var(--dark-brown)); color:#fff; flex:1;
+      box-shadow:0 10px 26px rgba(107,34,19,.35);
+    }
+    .btn-primary:hover{ transform: translateY(-2px); box-shadow:0 16px 34px rgba(107,34,19,.45); }
+    .btn-secondary{
+      background:#6c757d; color:#fff;
+    }
+    .btn-secondary:hover{ background:#5a6268; }
+
+    /* Responsive */
+    @media (max-width:1024px){
+      .nav-links{ display:none; }
+      .hamburger{ display:inline-flex; }
+      .container{ padding:96px 20px 32px; }
+    }
+    @media (max-width:640px){
+      .form-card{ padding:28px 24px; border-radius:16px; }
+    }
+
+
+    /* ============================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   Works from 4K displays to mobile phones
+   ============================================ */
+
+/* Extra Large Desktop (1920px+) */
+@media (min-width: 1920px) {
+  .container { max-width: 1600px; }
+}
+
+/* Large Desktop (1440-1919px) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .container { max-width: 1400px; }
+}
+
+/* Standard Desktop (1200-1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .container { max-width: 1140px; padding: 100px 25px 40px; }
+}
+
+/* Laptop/Small Desktop (1024-1199px) - HAMBURGER STARTS */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .container { max-width: 960px; padding: 96px 20px 32px; }
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  
+  /* Adjust grids */
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .content-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+
+/* Tablet Portrait (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 20px 30px; }
+  
+  /* Single column layouts */
+  .content-grid,
+  .form-row,
+  .stats-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  
+  /* Adjust cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 24px 20px !important; border-radius: 16px !important; }
+  
+  /* Typography adjustments */
+  .page-header h2,
+  .form-container h2 { font-size: 24px !important; }
+  
+  /* Tables */
+  .table-container { overflow-x: auto; }
+  table { min-width: 600px; }
+  th, td { padding: 12px 10px !important; font-size: 13px !important; }
+}
+
+/* Mobile Large (640-767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 16px 24px; }
+  
+  /* Force single column */
+  .content-grid,
+  .form-row,
+  .stats-grid,
+  .table-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  
+  /* Compact cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 20px 16px !important; border-radius: 14px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 20px !important; }
+  .page-header h2 { font-size: 22px !important; }
+  
+  /* Buttons */
+  .btn { padding: 10px 18px !important; font-size: 13px !important; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn { width: 100%; }
+  
+  /* Tables - force scroll */
+  table { min-width: 550px; }
+  th, td { padding: 10px 8px !important; font-size: 12px !important; }
+}
+
+/* Mobile Medium (480-639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 85px 14px 20px; }
+  .nav-inner { padding: 0 20px; }
+  
+  /* Ultra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 18px 14px !important; border-radius: 12px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 18px !important; }
+  .page-header h2 { font-size: 20px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 28px !important; }
+  
+  /* Buttons full width */
+  .btn,
+  .btn-sm { width: 100%; justify-content: center; padding: 10px 16px !important; }
+  .actions,
+  .form-actions,
+  .header-actions { flex-direction: column; gap: 8px; }
+  
+  /* Tables */
+  table { min-width: 480px; }
+  th, td { padding: 8px 6px !important; font-size: 11px !important; }
+}
+
+/* Mobile Small (360-479px) */
+@media (min-width: 360px) and (max-width: 479px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 80px 12px 16px; }
+  .nav-inner { padding: 0 16px; }
+  
+  /* Extra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 16px 12px !important; border-radius: 10px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 16px !important; }
+  .hamburger { width: 40px !important; height: 40px !important; }
+  .page-header h2 { font-size: 18px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 24px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 10px 12px !important; font-size: 14px !important; }
+  
+  /* Buttons */
+  .btn { padding: 9px 14px !important; font-size: 12px !important; }
+  
+  /* Tables ultra compact */
+  table { min-width: 420px; }
+  th, td { padding: 6px 4px !important; font-size: 10px !important; }
+  .badge { font-size: 10px !important; padding: 4px 8px !important; }
+}
+
+/* Mobile Extra Small (320-359px) */
+@media (max-width: 359px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 75px 10px 12px; }
+  .nav-inner { padding: 0 12px; }
+  
+  /* Minimal spacing */
+  .form-container,
+  .table-container,
+  .page-header { padding: 14px 10px !important; border-radius: 8px !important; }
+  
+  /* Typography tiny */
+  .navbar h1,
+  .brand { font-size: 15px !important; }
+  .hamburger { width: 36px !important; height: 36px !important; }
+  .hamburger span { width: 18px !important; }
+  .page-header h2 { font-size: 16px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 22px !important; }
+  .stat-card p { font-size: 11px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 8px 10px !important; font-size: 13px !important; }
+  
+  /* Buttons minimal */
+  .btn { padding: 8px 12px !important; font-size: 11px !important; }
+  
+  /* Tables minimal */
+  table { min-width: 360px; }
+  th, td { padding: 5px 3px !important; font-size: 9px !important; }
+  .badge { font-size: 9px !important; padding: 3px 6px !important; }
+}
+
+/* ============================================
+   UNIVERSAL FIXES FOR ALL ELEMENTS
+   ============================================ */
+
+/* Prevent horizontal overflow */
+* {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Flexible containers */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 1023px) {
+  .btn,
+  .btn-sm,
+  button,
+  a[class*="btn"] {
+    min-height: 44px; /* Apple's recommended touch target */
+    touch-action: manipulation; /* Disable double-tap zoom */
+  }
+}
+
+/* Optimize drawer for all sizes */
+@media (max-width: 1023px) {
+  .drawer {
+    width: min(320px, 85vw);
+  }
+}
+
+/* Ensure stat cards stack nicely */
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+  </style>
 </head>
 <body>
-    <div class="navbar">
-        <h1>Cafe<span class="highlight">Nest</span> - Owner</h1>
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <a href="{% url 'owner_dashboard' %}" class="brand" aria-label="CafeNest">Cafe<span class="highlight">Nest</span> - Owner</a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+        <a href="{% url 'cafe_list' %}">Cafés</a>
+        <a href="{% url 'owner_table_list' %}">Tables</a>
+        <a href="{% url 'staff_list' %}">Staff</a>
+        <a href="{% url 'menu_list' %}">Menu</a>
+        <a href="{% url 'reports' %}">Reports</a>
+        <a href="{% url 'owner_logout' %}">Logout</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger"
+        aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <span></span>
+      </button>
     </div>
-    
-    <div class="container">
-        <a href="{% url 'owner_table_list' %}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Back to Tables
-        </a>
-        
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  </header>
+
+  <!-- Mobile overlay + drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="mobile-drawer" aria-hidden="true">
+    <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+    <a href="{% url 'cafe_list' %}">Cafés</a>
+    <a href="{% url 'owner_table_list' %}">Tables</a>
+    <a href="{% url 'staff_list' %}">Staff</a>
+    <a href="{% url 'menu_list' %}">Menu</a>
+    <a href="{% url 'reports' %}">Reports</a>
+    <a href="{% url 'owner_logout' %}">Logout</a>
+  </aside>
+
+  <!-- Page -->
+  <main class="container">
+    <a href="{% url 'owner_table_list' %}" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Tables
+    </a>
+
+    {% if messages %}
+    <div class="messages" role="status" aria-live="polite">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="form-card" aria-labelledby="form-title">
+      <h2 id="form-title"><i class="fas fa-plus-circle"></i> Add New Table</h2>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        {% if cafes.count > 1 %}
+        <div class="form-group">
+          <label for="cafe"><i class="fas fa-store"></i> Select Café *</label>
+          <select id="cafe" name="cafe" required>
+            <option value="">-- Choose Café --</option>
+            {% for c in cafes %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
             {% endfor %}
+          </select>
         </div>
+        {% else %}
+        <input type="hidden" name="cafe" value="{{ cafes.first.id }}">
         {% endif %}
-        
-        <div class="form-card">
-            <h2><i class="fas fa-plus-circle"></i> Add New Table</h2>
-            
-            <form method="POST">
-                {% csrf_token %}
-                
-                {% if cafes.count > 1 %}
-                <div class="form-group">
-                    <label for="cafe"><i class="fas fa-store"></i> Select Café *</label>
-                    <select id="cafe" name="cafe" required>
-                        <option value="">-- Choose Café --</option>
-                        {% for c in cafes %}
-                        <option value="{{ c.id }}">{{ c.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                {% else %}
-                <input type="hidden" name="cafe" value="{{ cafes.first.id }}">
-                {% endif %}
-                
-                <div class="form-group">
-                    <label for="table_number"><i class="fas fa-hashtag"></i> Table Number *</label>
-                    <input type="text" id="table_number" name="table_number" required placeholder="e.g., 1, A1, VIP-1">
-                    <div class="form-hint">Unique identifier for this table</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="capacity"><i class="fas fa-users"></i> Capacity *</label>
-                    <input type="number" id="capacity" name="capacity" required min="1" max="20" value="4" placeholder="Number of people">
-                </div>
-                
-                <div class="form-group">
-                    <label for="section"><i class="fas fa-map-marker-alt"></i> Section</label>
-                    <input type="text" id="section" name="section" placeholder="e.g., Main Hall, Outdoor, VIP" value="Main Hall">
-                    <div class="form-hint">Floor or area where the table is located</div>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Add Table
-                    </button>
-                    <a href="{% url 'owner_table_list' %}" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Cancel
-                    </a>
-                </div>
-            </form>
+
+        <div class="form-group">
+          <label for="table_number"><i class="fas fa-hashtag"></i> Table Number *</label>
+          <input type="text" id="table_number" name="table_number" required placeholder="e.g., 1, A1, VIP-1">
+          <div class="form-hint">Unique identifier for this table</div>
         </div>
-    </div>
+
+        <div class="form-group">
+          <label for="capacity"><i class="fas fa-users"></i> Capacity *</label>
+          <input type="number" id="capacity" name="capacity" required min="1" max="20" value="4" placeholder="Number of people">
+        </div>
+
+        <div class="form-group">
+          <label for="section"><i class="fas fa-map-marker-alt"></i> Section</label>
+          <input type="text" id="section" name="section" placeholder="e.g., Main Hall, Outdoor, VIP" value="Main Hall">
+          <div class="form-hint">Floor or area where the table is located</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Add Table
+          </button>
+          <a href="{% url 'owner_table_list' %}" class="btn btn-secondary">
+            <i class="fas fa-times"></i> Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Accessible hamburger drawer interactions
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('overlay');
+
+    function setMenuState(open){
+      hamburger.setAttribute('aria-expanded', String(open));
+      drawer.classList.toggle('active', open);
+      overlay.classList.toggle('active', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if(open){
+        const firstLink = drawer.querySelector('a');
+        if(firstLink) firstLink.focus();
+      }
+    }
+
+    hamburger.addEventListener('click', ()=> setMenuState(hamburger.getAttribute('aria-expanded')!=='true'));
+    overlay.addEventListener('click', ()=> setMenuState(false));
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenuState(false); });
+  </script>
 </body>
 </html>

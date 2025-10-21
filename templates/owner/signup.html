@@ -1,427 +1,898 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Signup - CafeNest</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #8B4513 0%, #6B2213 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .signup-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(107, 34, 19, 0.4);
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            border-top: 5px solid #E2725B;
-        }
-        
-        .logo-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .logo-section h1 {
-            color: #8B4513;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        
-        .logo-section .highlight {
-            color: #E2725B;
-        }
-        
-        .logo-section p {
-            color: #A0522D;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #6B2213;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #DEC2AF;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            background: #FFFAF5;
-            color: #4a3728;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #E2725B;
-            box-shadow: 0 0 0 3px rgba(226, 114, 91, 0.15);
-        }
-        
-        /* Fix for Django form widgets */
-        .form-group input[type="email"],
-        .form-group input[type="text"],
-        .form-group input[type="password"],
-        .form-group input[type="tel"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #DEC2AF;
-            border-radius: 8px;
-            font-size: 14px;
-            background: #FFFAF5;
-            color: #4a3728;
-        }
-        
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: #E2725B;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-        
-        .btn-primary:hover {
-            background: #D74426;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(226, 114, 91, 0.4);
-        }
-        
-        .divider {
-            text-align: center;
-            margin: 25px 0;
-            position: relative;
-        }
-        
-        .divider::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 1px;
-            background: #DEC2AF;
-        }
-        
-        .divider span {
-            background: white;
-            padding: 0 15px;
-            position: relative;
-            color: #A0522D;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .google-btn {
-            width: 100%;
-            padding: 12px;
-            background: white;
-            border: 2px solid #DEC2AF;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: #6B2213;
-        }
-        
-        .google-btn:hover {
-            border-color: #E2725B;
-            background: #FFF5E6;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(226, 114, 91, 0.2);
-        }
-        
-        .login-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #6B2213;
-            font-size: 14px;
-        }
-        
-        .login-link a {
-            color: #E2725B;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .login-link a:hover {
-            text-decoration: underline;
-            color: #D74426;
-        }
-        
-        .messages {
-            margin-bottom: 20px;
-        }
-        
-        .alert {
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .alert-success {
-            background: #C8E6C9;
-            color: #2E7D32;
-            border: 1px solid #A5D6A7;
-        }
-        
-        .alert-error {
-            background: #FFCDD2;
-            color: #C62828;
-            border: 1px solid #EF9A9A;
-        }
-        
-        .errorlist {
-            color: #CD5C5C;
-            list-style: none;
-            font-size: 13px;
-            margin-top: 5px;
-            padding-left: 0;
-        }
-        
-        .password-match-error {
-            color: #CD5C5C;
-            font-size: 13px;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .password-strength {
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .weak { color: #dc3545; }
-        .medium { color: #ffc107; }
-        .strong { color: #28a745; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Owner Signup - CafeNest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root{
+      --primary-brown:#8B4513;
+      --dark-brown:#6B2213;
+      --accent-coral:#E2725B;
+      --cream:#FFFAF5;
+      --tan:#DEC2AF;
+      --text:#4a3728;
+    }
+
+    /* Modern, low-light friendly gradient background */
+    body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary-brown) 0%, var(--dark-brown) 50%, #4A1810 100%);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      scrollbar-gutter: stable both-edges; /* prevent layout shift when scrollbars appear */
+    }
+
+    /* Themed custom scrollbar: Standard + WebKit */
+    html{
+      scrollbar-width: thin;                 /* Firefox */
+      scrollbar-color: var(--accent-coral) var(--cream); /* Firefox */
+    }
+    ::-webkit-scrollbar{ width: 12px; height: 12px; }
+    ::-webkit-scrollbar-track{
+      background: linear-gradient(180deg, var(--cream), var(--tan));
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, var(--accent-coral), var(--primary-brown));
+      border-radius: 10px;
+      border: 2px solid var(--cream);
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow: 0 0 8px rgba(226,114,91,.5);
+    }
+
+    /* Navbar - glass with accent */
+    .navbar{
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(139,69,19,.9), rgba(107,34,19,.9));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 8px 28px rgba(107,34,19,.35);
+      z-index: 1000;
+    }
+    .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    .brand{
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform .25s ease;
+    }
+    .brand i{ color: var(--accent-coral); }
+    .brand .highlight{ color: var(--accent-coral); }
+    .brand:hover{ transform: scale(1.03); }
+
+    .nav-links{
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .nav-links a{
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: background .25s ease, transform .25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links a:hover{
+      background: rgba(255,255,255,.18);
+      transform: translateY(-1px);
+    }
+
+    /* Hamburger */
+    .hamburger{
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.1);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .25s ease, border-color .25s ease;
+    }
+    .hamburger:hover{
+      background: rgba(255,255,255,.2);
+      border-color: rgba(255,255,255,.6);
+    }
+    .hamburger span,
+    .hamburger span::before,
+    .hamburger span::after{
+      content:'';
+      display:block;
+      width:22px;
+      height:2px;
+      background:#fff;
+      border-radius:2px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .hamburger span::before{ transform: translateY(-7px); }
+    .hamburger span::after{ transform: translateY(7px); }
+    .hamburger[aria-expanded="true"] span{ opacity: 0; }
+    .hamburger[aria-expanded="true"] span::before{ transform: rotate(45deg); }
+    .hamburger[aria-expanded="true"] span::after{ transform: rotate(-45deg); }
+
+    /* Mobile menu + overlay */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      z-index: 999;
+    }
+    .overlay.active{
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drawer{
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 320px;
+      max-width: 88vw;
+      height: 100vh;
+      padding: 90px 24px 24px;
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow: -8px 0 28px rgba(0,0,0,.35);
+      transition: right .35s cubic-bezier(.68,-.55,.265,1.55);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .drawer.active{ right: 0; }
+    .drawer a{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      transition: transform .2s ease, background .2s ease;
+      margin-bottom: 12px;
+    }
+    .drawer a:hover{ transform: translateX(6px); background: rgba(255,255,255,.16); }
+
+    /* Main container */
+    .page{
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px 40px; /* leave space for fixed navbar */
+      position: relative;
+    }
+
+    /* Signup card with glassmorphism + motion */
+    .signup-container{
+      position: relative;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 24px;
+      border: 2px solid rgba(226,114,91,.28);
+      box-shadow:
+        0 20px 60px rgba(107,34,19,.42),
+        0 0 0 1px rgba(255,255,255,.2);
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 560px;
+      overflow: hidden;
+      animation: rise .5s ease both;
+    }
+    .signup-container::after{
+      content:'';
+      position: absolute;
+      right:-40%;
+      top:-40%;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(226,114,91,.08) 0%, transparent 65%);
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes rise{
+      from{ opacity:0; transform: translateY(18px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+    @keyframes float{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(8px); }
+    }
+
+    .logo-section{
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .logo-section h1{
+      color: var(--primary-brown);
+      font-weight: 800;
+      font-size: 40px;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+    }
+    .logo-section .highlight{ color: var(--accent-coral); }
+    .logo-section p{
+      color: #A0522D;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .messages{ margin-bottom: 18px; }
+    .alert{
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      animation: slideIn .35s ease;
+      font-weight: 600;
+    }
+    @keyframes slideIn{
+      from{ opacity:0; transform: translateX(-10px);}
+      to{ opacity:1; transform: translateX(0);}
+    }
+    .alert-success{ background: #C8E6C9; color:#1B5E20; border:1px solid #A5D6A7; }
+    .alert-error{ background: #FFCDD2; color:#B71C1C; border:1px solid #EF9A9A; }
+
+    .form-group{ margin-bottom: 18px; }
+    .form-group label{
+      display: block;
+      color: var(--dark-brown);
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-group label i{ color: var(--accent-coral); }
+
+    .form-group input{
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--tan);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 15px;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    .form-group input:focus{
+      outline: none;
+      border-color: var(--accent-coral);
+      box-shadow: 0 0 0 4px rgba(226,114,91,.16);
+      transform: translateY(-1px);
+    }
+    .errorlist{
+      list-style: none;
+      padding-left: 0;
+      margin-top: 6px;
+      color: #CD5C5C;
+      font-size: 13px;
+    }
+
+    .password-strength{
+      display: none;
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .weak{ color:#dc3545; }
+    .medium{ color:#ffc107; }
+    .strong{ color:#28a745; }
+
+    .password-match-error{
+      display:none;
+      margin-top:6px;
+      font-size: 13px;
+      color:#CD5C5C;
+      font-weight: 700;
+    }
+
+    .btn-primary{
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-coral), var(--primary-brown));
+      box-shadow: 0 10px 30px rgba(226,114,91,.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before{
+      content:'';
+      position:absolute;
+      inset:auto auto 0 0;
+      width:0;
+      height: 100%;
+      background: rgba(255,255,255,.25);
+      transition: width .4s ease;
+      transform: skewX(-15deg);
+    }
+    .btn-primary:hover{ transform: translateY(-2px); box-shadow:0 16px 34px rgba(226,114,91,.55); }
+    .btn-primary:hover::before{ width: 120%; }
+
+    .divider{
+      text-align:center;
+      margin: 24px 0;
+      position: relative;
+    }
+    .divider::before{
+      content:'';
+      position:absolute;
+      left:0; top:50%;
+      width:100%; height:2px;
+      background: linear-gradient(90deg, transparent, var(--tan), transparent);
+    }
+    .divider span{
+      position: relative;
+      background:#fff;
+      padding: 0 14px;
+      color:#A0522D;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .google-btn{
+      width: 100%;
+      padding: 14px;
+      background: #fff;
+      border: 2px solid var(--tan);
+      border-radius: 12px;
+      color: var(--dark-brown);
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    }
+    .google-btn:hover{
+      transform: translateY(-2px);
+      border-color: var(--accent-coral);
+      box-shadow: 0 12px 26px rgba(226,114,91,.28);
+    }
+
+    .login-link{
+      text-align: center;
+      margin-top: 16px;
+      color: var(--dark-brown);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .login-link a{
+      color: var(--accent-coral);
+      text-decoration: none;
+      font-weight: 800;
+      position: relative;
+    }
+    .login-link a::after{
+      content:'';
+      position:absolute;
+      left:0; bottom:-2px;
+      width:0; height:2px;
+      background: var(--accent-coral);
+      transition: width .2s ease;
+    }
+    .login-link a:hover::after{ width: 100%; }
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .nav-links{ display: none; }
+      .hamburger{ display: inline-flex; }
+      .signup-container{ padding: 44px 36px; }
+    }
+    @media (max-width: 640px){
+      .signup-container{ padding: 36px 26px; border-radius: 20px; }
+      .logo-section h1{ font-size: 34px; }
+    }
+    @media (max-width: 420px){
+      .signup-container{ padding: 30px 22px; }
+      .logo-section h1{ font-size: 30px; }
+    }
+
+
+    /* ============================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   Works from 4K displays to mobile phones
+   ============================================ */
+
+/* Extra Large Desktop (1920px+) */
+@media (min-width: 1920px) {
+  .container { max-width: 1600px; }
+}
+
+/* Large Desktop (1440-1919px) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .container { max-width: 1400px; }
+}
+
+/* Standard Desktop (1200-1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .container { max-width: 1140px; padding: 100px 25px 40px; }
+}
+
+/* Laptop/Small Desktop (1024-1199px) - HAMBURGER STARTS */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .container { max-width: 960px; padding: 96px 20px 32px; }
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  
+  /* Adjust grids */
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .content-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+
+/* Tablet Portrait (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 20px 30px; }
+  
+  /* Single column layouts */
+  .content-grid,
+  .form-row,
+  .stats-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  
+  /* Adjust cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 24px 20px !important; border-radius: 16px !important; }
+  
+  /* Typography adjustments */
+  .page-header h2,
+  .form-container h2 { font-size: 24px !important; }
+  
+  /* Tables */
+  .table-container { overflow-x: auto; }
+  table { min-width: 600px; }
+  th, td { padding: 12px 10px !important; font-size: 13px !important; }
+}
+
+/* Mobile Large (640-767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 16px 24px; }
+  
+  /* Force single column */
+  .content-grid,
+  .form-row,
+  .stats-grid,
+  .table-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  
+  /* Compact cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 20px 16px !important; border-radius: 14px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 20px !important; }
+  .page-header h2 { font-size: 22px !important; }
+  
+  /* Buttons */
+  .btn { padding: 10px 18px !important; font-size: 13px !important; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn { width: 100%; }
+  
+  /* Tables - force scroll */
+  table { min-width: 550px; }
+  th, td { padding: 10px 8px !important; font-size: 12px !important; }
+}
+
+/* Mobile Medium (480-639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 85px 14px 20px; }
+  .nav-inner { padding: 0 20px; }
+  
+  /* Ultra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 18px 14px !important; border-radius: 12px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 18px !important; }
+  .page-header h2 { font-size: 20px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 28px !important; }
+  
+  /* Buttons full width */
+  .btn,
+  .btn-sm { width: 100%; justify-content: center; padding: 10px 16px !important; }
+  .actions,
+  .form-actions,
+  .header-actions { flex-direction: column; gap: 8px; }
+  
+  /* Tables */
+  table { min-width: 480px; }
+  th, td { padding: 8px 6px !important; font-size: 11px !important; }
+}
+
+/* Mobile Small (360-479px) */
+@media (min-width: 360px) and (max-width: 479px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 80px 12px 16px; }
+  .nav-inner { padding: 0 16px; }
+  
+  /* Extra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 16px 12px !important; border-radius: 10px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 16px !important; }
+  .hamburger { width: 40px !important; height: 40px !important; }
+  .page-header h2 { font-size: 18px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 24px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 10px 12px !important; font-size: 14px !important; }
+  
+  /* Buttons */
+  .btn { padding: 9px 14px !important; font-size: 12px !important; }
+  
+  /* Tables ultra compact */
+  table { min-width: 420px; }
+  th, td { padding: 6px 4px !important; font-size: 10px !important; }
+  .badge { font-size: 10px !important; padding: 4px 8px !important; }
+}
+
+/* Mobile Extra Small (320-359px) */
+@media (max-width: 359px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 75px 10px 12px; }
+  .nav-inner { padding: 0 12px; }
+  
+  /* Minimal spacing */
+  .form-container,
+  .table-container,
+  .page-header { padding: 14px 10px !important; border-radius: 8px !important; }
+  
+  /* Typography tiny */
+  .navbar h1,
+  .brand { font-size: 15px !important; }
+  .hamburger { width: 36px !important; height: 36px !important; }
+  .hamburger span { width: 18px !important; }
+  .page-header h2 { font-size: 16px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 22px !important; }
+  .stat-card p { font-size: 11px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 8px 10px !important; font-size: 13px !important; }
+  
+  /* Buttons minimal */
+  .btn { padding: 8px 12px !important; font-size: 11px !important; }
+  
+  /* Tables minimal */
+  table { min-width: 360px; }
+  th, td { padding: 5px 3px !important; font-size: 9px !important; }
+  .badge { font-size: 9px !important; padding: 3px 6px !important; }
+}
+
+/* ============================================
+   UNIVERSAL FIXES FOR ALL ELEMENTS
+   ============================================ */
+
+/* Prevent horizontal overflow */
+* {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Flexible containers */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 1023px) {
+  .btn,
+  .btn-sm,
+  button,
+  a[class*="btn"] {
+    min-height: 44px; /* Apple's recommended touch target */
+    touch-action: manipulation; /* Disable double-tap zoom */
+  }
+}
+
+/* Optimize drawer for all sizes */
+@media (max-width: 1023px) {
+  .drawer {
+    width: min(320px, 85vw);
+  }
+}
+
+/* Ensure stat cards stack nicely */
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+  </style>
 </head>
 <body>
-    <div class="signup-container">
-        <div class="logo-section">
-            <h1>Cafe<span class="highlight">Nest</span></h1>
-            <p>Owner Registration</p>
-        </div>
-        
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
-        <form method="POST" id="signupForm">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="id_email"><i class="fas fa-envelope"></i> Email Address *</label>
-                <input type="email" name="email" id="id_email" required placeholder="Enter your email">
-                {% if form.email.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.email.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_first_name"><i class="fas fa-user"></i> First Name *</label>
-                <input type="text" name="first_name" id="id_first_name" required placeholder="Enter your first name">
-                {% if form.first_name.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.first_name.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_last_name"><i class="fas fa-user"></i> Last Name *</label>
-                <input type="text" name="last_name" id="id_last_name" required placeholder="Enter your last name">
-                {% if form.last_name.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.last_name.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_phone"><i class="fas fa-phone"></i> Phone Number</label>
-                <input type="tel" name="phone" id="id_phone" placeholder="Enter your phone number">
-                {% if form.phone.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.phone.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_password"><i class="fas fa-lock"></i> Password *</label>
-                <input type="password" name="password" id="id_password" required placeholder="Create a strong password">
-                <div class="password-strength" id="passwordStrength"></div>
-                {% if form.password.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.password.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_confirm_password"><i class="fas fa-lock"></i> Confirm Password *</label>
-                <input type="password" name="confirm_password" id="id_confirm_password" required placeholder="Re-enter your password">
-                <div class="password-match-error" id="passwordMatchError">Passwords do not match!</div>
-                {% if form.confirm_password.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.confirm_password.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <button type="submit" class="btn-primary">
-                <i class="fas fa-user-plus"></i> Create Account
-            </button>
-        </form>
-        
-        <div class="divider">
-            <span>OR</span>
-        </div>
-        
-        <a href="/accounts/google/login/?process=signup" class="google-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Continue with Google
-        </a>
-        
-        <div class="login-link">
-            Already have an account? <a href="{% url 'owner_login' %}">Login here</a>
-        </div>
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <a href="{% url 'home' %}" class="brand" aria-label="CafeNest Home">
+        <i class="fas fa-coffee"></i>
+        Cafe<span class="highlight">Nest</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'owner_login' %}"><i class="fas fa-right-to-bracket"></i> Login</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger"
+        aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <span></span>
+      </button>
     </div>
-    
-    <script>
-        const password = document.getElementById('id_password');
-        const confirmPassword = document.getElementById('id_confirm_password');
-        const passwordStrength = document.getElementById('passwordStrength');
-        const passwordMatchError = document.getElementById('passwordMatchError');
-        const signupForm = document.getElementById('signupForm');
-        
-        // Password strength checker
-        password.addEventListener('input', function() {
-            const value = this.value;
-            let strength = '';
-            let className = '';
-            
-            if (value.length === 0) {
-                passwordStrength.style.display = 'none';
-                return;
-            }
-            
-            passwordStrength.style.display = 'block';
-            
-            if (value.length < 6) {
-                strength = 'Weak password';
-                className = 'weak';
-            } else if (value.length < 10) {
-                strength = 'Medium strength';
-                className = 'medium';
-            } else {
-                strength = 'Strong password';
-                className = 'strong';
-            }
-            
-            passwordStrength.textContent = strength;
-            passwordStrength.className = 'password-strength ' + className;
-        });
-        
-        // Password match checker
-        confirmPassword.addEventListener('input', function() {
-            if (this.value === '') {
-                passwordMatchError.style.display = 'none';
-                return;
-            }
-            
-            if (this.value !== password.value) {
-                passwordMatchError.style.display = 'block';
-                this.style.borderColor = '#CD5C5C';
-            } else {
-                passwordMatchError.style.display = 'none';
-                this.style.borderColor = '#28a745';
-            }
-        });
-        
-        // Form submission validation
-        signupForm.addEventListener('submit', function(e) {
-            if (password.value !== confirmPassword.value) {
-                e.preventDefault();
-                alert('❌ Passwords do not match! Please check and try again.');
-                confirmPassword.focus();
-                return false;
-            }
-            
-            if (password.value.length < 6) {
-                e.preventDefault();
-                alert('❌ Password must be at least 6 characters long!');
-                password.focus();
-                return false;
-            }
-        });
-    </script>
+  </header>
+
+  <!-- Mobile overlay + drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="mobile-drawer" aria-hidden="true">
+    <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+    <a href="{% url 'owner_login' %}"><i class="fas fa-right-to-bracket"></i> Login</a>
+  </aside>
+
+  <!-- Page -->
+  <main class="page" id="main-content">
+    <section class="signup-container" aria-labelledby="signup-title">
+      <div class="logo-section">
+        <h1 id="signup-title">Cafe<span class="highlight">Nest</span></h1>
+        <p>Owner Registration</p>
+      </div>
+
+      {% if messages %}
+      <div class="messages" role="status" aria-live="polite">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="POST" id="signupForm" novalidate>
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="id_email"><i class="fas fa-envelope"></i> Email Address *</label>
+          <input type="email" name="email" id="id_email" required placeholder="Enter your email" autocomplete="email" />
+          {% if form.email.errors %}
+            <ul class="errorlist">
+              {% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_first_name"><i class="fas fa-user"></i> First Name *</label>
+          <input type="text" name="first_name" id="id_first_name" required placeholder="Enter your first name" autocomplete="given-name" />
+          {% if form.first_name.errors %}
+            <ul class="errorlist">
+              {% for error in form.first_name.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_last_name"><i class="fas fa-user"></i> Last Name *</label>
+          <input type="text" name="last_name" id="id_last_name" required placeholder="Enter your last name" autocomplete="family-name" />
+          {% if form.last_name.errors %}
+            <ul class="errorlist">
+              {% for error in form.last_name.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_phone"><i class="fas fa-phone"></i> Phone Number</label>
+          <input type="tel" name="phone" id="id_phone" placeholder="Enter your phone number" autocomplete="tel" />
+          {% if form.phone.errors %}
+            <ul class="errorlist">
+              {% for error in form.phone.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_password"><i class="fas fa-lock"></i> Password *</label>
+          <input type="password" name="password" id="id_password" required placeholder="Create a strong password" autocomplete="new-password" />
+          <div class="password-strength" id="passwordStrength"></div>
+          {% if form.password.errors %}
+            <ul class="errorlist">
+              {% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_confirm_password"><i class="fas fa-lock"></i> Confirm Password *</label>
+          <input type="password" name="confirm_password" id="id_confirm_password" required placeholder="Re-enter your password" autocomplete="new-password" />
+          <div class="password-match-error" id="passwordMatchError">Passwords do not match!</div>
+          {% if form.confirm_password.errors %}
+            <ul class="errorlist">
+              {% for error in form.confirm_password.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+
+      <div class="divider"><span>OR</span></div>
+
+      <a href="/accounts/google/login/?process=signup" class="google-btn" aria-label="Continue with Google">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Continue with Google
+      </a>
+
+      <p class="login-link">
+        Already have an account? <a href="{% url 'owner_login' %}">Login here</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Accessible hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('overlay');
+
+    function setMenuState(open){
+      hamburger.setAttribute('aria-expanded', String(open));
+      drawer.classList.toggle('active', open);
+      overlay.classList.toggle('active', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if(open){ drawer.focus(); }
+    }
+
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.getAttribute('aria-expanded') !== 'true';
+      setMenuState(open);
+    });
+    overlay.addEventListener('click', () => setMenuState(false));
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') setMenuState(false);
+    });
+
+    // Trap focus inside drawer when open
+    drawer.addEventListener('keydown', (e) => {
+      if(hamburger.getAttribute('aria-expanded') !== 'true') return;
+      const focusable = drawer.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+      if(!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if(e.key === 'Tab'){
+        if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // Password strength meter (length-based placeholder: adjust with rules if needed)
+    const pw = document.getElementById('id_password');
+    const pw2 = document.getElementById('id_confirm_password');
+    const pwMsg = document.getElementById('passwordStrength');
+    const pwMismatch = document.getElementById('passwordMatchError');
+
+    pw.addEventListener('input', () => {
+      const v = pw.value;
+      if(!v){ pwMsg.style.display='none'; return; }
+      pwMsg.style.display='block';
+      let label='Weak password', cls='weak';
+      if(v.length >= 10) { label='Strong password'; cls='strong'; }
+      else if(v.length >= 6) { label='Medium strength'; cls='medium'; }
+      pwMsg.textContent = label;
+      pwMsg.className = 'password-strength ' + cls;
+    });
+
+    pw2.addEventListener('input', () => {
+      if(!pw2.value){ pwMismatch.style.display='none'; pw2.style.borderColor=''; return; }
+      if(pw2.value !== pw.value){ pwMismatch.style.display='block'; pw2.style.borderColor='#CD5C5C'; }
+      else { pwMismatch.style.display='none'; pw2.style.borderColor='#28a745'; }
+    });
+
+    // Client-side submit guard
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', (e) => {
+      if(pw.value !== pw2.value){
+        e.preventDefault();
+        alert('Passwords do not match. Please re-enter.');
+        pw2.focus();
+      }else if(pw.value.length < 6){
+        e.preventDefault();
+        alert('Password must be at least 6 characters.');
+        pw.focus();
+      }
+    });
+  </script>
 </body>
 </html>

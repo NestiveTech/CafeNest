@@ -23,6 +23,12 @@
         }
         
         /* Custom Scrollbar */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-coral) var(--light-cream);
+            scrollbar-gutter: stable both-edges; /* Prevents layout shift */
+        }
+        
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -42,12 +48,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(180deg, var(--primary-brown) 0%, var(--dark-brown) 100%);
             box-shadow: 0 0 10px rgba(226, 114, 91, 0.5);
-        }
-        
-        /* Firefox Scrollbar */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-coral) var(--light-cream);
         }
         
         body {
@@ -382,7 +382,7 @@
             text-transform: uppercase;
         }
         
-        /* Google Button - Enhanced */
+        /* Google Button */
         .google-btn {
             width: 100%;
             padding: 16px;
@@ -434,7 +434,7 @@
             box-shadow: 0 8px 25px rgba(226, 114, 91, 0.3);
         }
         
-        /* Divider - Modern Style */
+        /* Divider */
         .divider {
             text-align: center;
             margin: 35px 0;
@@ -462,7 +462,7 @@
             text-transform: uppercase;
         }
         
-        /* Form Group - Enhanced */
+        /* Form Group */
         .form-group {
             margin-bottom: 25px;
             position: relative;
@@ -507,7 +507,7 @@
             color: #b8a89f;
         }
         
-        /* Primary Button - Enhanced */
+        /* Primary Button */
         .btn-primary {
             width: 100%;
             padding: 16px;
@@ -598,7 +598,7 @@
             color: var(--dark-brown);
         }
         
-        /* Messages - Enhanced */
+        /* Messages */
         .messages {
             margin-bottom: 25px;
             position: relative;
@@ -680,7 +680,6 @@
         
         /* Responsive Design */
         @media (max-width: 1024px) {
-            /* Tablet - Show Hamburger */
             .navbar {
                 padding: 15px 30px;
             }
@@ -695,7 +694,6 @@
         }
         
         @media (max-width: 768px) {
-            /* Mobile */
             .navbar {
                 padding: 15px 20px;
             }
@@ -745,13 +743,258 @@
                 font-size: 15px;
             }
         }
+
+
+        /* ============================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   Works from 4K displays to mobile phones
+   ============================================ */
+
+/* Extra Large Desktop (1920px+) */
+@media (min-width: 1920px) {
+  .container { max-width: 1600px; }
+}
+
+/* Large Desktop (1440-1919px) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .container { max-width: 1400px; }
+}
+
+/* Standard Desktop (1200-1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .container { max-width: 1140px; padding: 100px 25px 40px; }
+}
+
+/* Laptop/Small Desktop (1024-1199px) - HAMBURGER STARTS */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .container { max-width: 960px; padding: 96px 20px 32px; }
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  
+  /* Adjust grids */
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .content-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+
+/* Tablet Portrait (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 20px 30px; }
+  
+  /* Single column layouts */
+  .content-grid,
+  .form-row,
+  .stats-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  
+  /* Adjust cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 24px 20px !important; border-radius: 16px !important; }
+  
+  /* Typography adjustments */
+  .page-header h2,
+  .form-container h2 { font-size: 24px !important; }
+  
+  /* Tables */
+  .table-container { overflow-x: auto; }
+  table { min-width: 600px; }
+  th, td { padding: 12px 10px !important; font-size: 13px !important; }
+}
+
+/* Mobile Large (640-767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 16px 24px; }
+  
+  /* Force single column */
+  .content-grid,
+  .form-row,
+  .stats-grid,
+  .table-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  
+  /* Compact cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 20px 16px !important; border-radius: 14px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 20px !important; }
+  .page-header h2 { font-size: 22px !important; }
+  
+  /* Buttons */
+  .btn { padding: 10px 18px !important; font-size: 13px !important; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn { width: 100%; }
+  
+  /* Tables - force scroll */
+  table { min-width: 550px; }
+  th, td { padding: 10px 8px !important; font-size: 12px !important; }
+}
+
+/* Mobile Medium (480-639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 85px 14px 20px; }
+  .nav-inner { padding: 0 20px; }
+  
+  /* Ultra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 18px 14px !important; border-radius: 12px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 18px !important; }
+  .page-header h2 { font-size: 20px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 28px !important; }
+  
+  /* Buttons full width */
+  .btn,
+  .btn-sm { width: 100%; justify-content: center; padding: 10px 16px !important; }
+  .actions,
+  .form-actions,
+  .header-actions { flex-direction: column; gap: 8px; }
+  
+  /* Tables */
+  table { min-width: 480px; }
+  th, td { padding: 8px 6px !important; font-size: 11px !important; }
+}
+
+/* Mobile Small (360-479px) */
+@media (min-width: 360px) and (max-width: 479px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 80px 12px 16px; }
+  .nav-inner { padding: 0 16px; }
+  
+  /* Extra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 16px 12px !important; border-radius: 10px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 16px !important; }
+  .hamburger { width: 40px !important; height: 40px !important; }
+  .page-header h2 { font-size: 18px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 24px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 10px 12px !important; font-size: 14px !important; }
+  
+  /* Buttons */
+  .btn { padding: 9px 14px !important; font-size: 12px !important; }
+  
+  /* Tables ultra compact */
+  table { min-width: 420px; }
+  th, td { padding: 6px 4px !important; font-size: 10px !important; }
+  .badge { font-size: 10px !important; padding: 4px 8px !important; }
+}
+
+/* Mobile Extra Small (320-359px) */
+@media (max-width: 359px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 75px 10px 12px; }
+  .nav-inner { padding: 0 12px; }
+  
+  /* Minimal spacing */
+  .form-container,
+  .table-container,
+  .page-header { padding: 14px 10px !important; border-radius: 8px !important; }
+  
+  /* Typography tiny */
+  .navbar h1,
+  .brand { font-size: 15px !important; }
+  .hamburger { width: 36px !important; height: 36px !important; }
+  .hamburger span { width: 18px !important; }
+  .page-header h2 { font-size: 16px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 22px !important; }
+  .stat-card p { font-size: 11px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 8px 10px !important; font-size: 13px !important; }
+  
+  /* Buttons minimal */
+  .btn { padding: 8px 12px !important; font-size: 11px !important; }
+  
+  /* Tables minimal */
+  table { min-width: 360px; }
+  th, td { padding: 5px 3px !important; font-size: 9px !important; }
+  .badge { font-size: 9px !important; padding: 3px 6px !important; }
+}
+
+/* ============================================
+   UNIVERSAL FIXES FOR ALL ELEMENTS
+   ============================================ */
+
+/* Prevent horizontal overflow */
+* {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Flexible containers */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 1023px) {
+  .btn,
+  .btn-sm,
+  button,
+  a[class*="btn"] {
+    min-height: 44px; /* Apple's recommended touch target */
+    touch-action: manipulation; /* Disable double-tap zoom */
+  }
+}
+
+/* Optimize drawer for all sizes */
+@media (max-width: 1023px) {
+  .drawer {
+    width: min(320px, 85vw);
+  }
+}
+
+/* Ensure stat cards stack nicely */
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="navbar-content">
-            <a href="{% url 'home' %}" class="navbar-brand">
+            <a href="{% url 'home' %}" class="navbar-brand" aria-label="CafeNest Home">
                 <i class="fas fa-coffee"></i>
                 Cafe<span class="highlight">Nest</span>
             </a>
@@ -767,19 +1010,19 @@
             </div>
             
             <!-- Hamburger Menu Button -->
-            <div class="hamburger" onclick="toggleMobileMenu()">
+            <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu-overlay" id="overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu">
+    <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
         <div class="mobile-menu-items">
             <a href="{% url 'home' %}">
                 <i class="fas fa-home"></i> Home
@@ -791,10 +1034,10 @@
                 <i class="fas fa-user-tie"></i> Manager Login
             </a>
         </div>
-    </div>
+    </aside>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <main class="main-content">
         <div class="login-container">
             <div class="logo-section">
                 <div class="logo-icon">
@@ -805,7 +1048,7 @@
             </div>
             
             {% if messages %}
-            <div class="messages">
+            <div class="messages" role="alert">
                 {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
                     {{ message }}
@@ -815,7 +1058,7 @@
             {% endif %}
             
             <a href="/accounts/google/login/?process=login" class="google-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -835,14 +1078,14 @@
                     <label for="id_login">
                         <i class="fas fa-envelope"></i> Email Address
                     </label>
-                    <input type="email" name="login" id="id_login" placeholder="Enter your email" required>
+                    <input type="email" name="login" id="id_login" placeholder="Enter your email" required autocomplete="email">
                 </div>
                 
                 <div class="form-group">
                     <label for="id_password">
                         <i class="fas fa-lock"></i> Password
                     </label>
-                    <input type="password" name="password" id="id_password" placeholder="Enter your password" required>
+                    <input type="password" name="password" id="id_password" placeholder="Enter your password" required autocomplete="current-password">
                 </div>
                 
                 <button type="submit" class="btn-primary">
@@ -860,26 +1103,27 @@
                 </a>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- JavaScript -->
     <script>
         // Mobile Menu Toggle
         function toggleMobileMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const overlay = document.querySelector('.mobile-menu-overlay');
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('overlay');
+            
+            const isActive = hamburger.classList.contains('active');
             
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             overlay.classList.toggle('active');
             
+            // Update aria-expanded
+            hamburger.setAttribute('aria-expanded', !isActive);
+            
             // Prevent body scroll when menu is open
-            if (mobileMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
+            document.body.style.overflow = isActive ? '' : 'hidden';
         }
         
         // Close mobile menu when clicking on a link
@@ -889,8 +1133,14 @@
             });
         });
         
+        // Close menu on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('hamburger').classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+        
         // Form validation feedback
-        const form = document.querySelector('form');
         const inputs = document.querySelectorAll('input[required]');
         
         inputs.forEach(input => {

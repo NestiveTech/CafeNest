@@ -4795,3 +4795,23 @@ INFO 2025-10-20 23:13:38,482 basehttp "GET /login/ HTTP/1.1" 200 27039
 INFO 2025-10-20 23:13:40,104 basehttp "GET /signup/ HTTP/1.1" 200 12448
 INFO 2025-10-20 23:13:46,988 basehttp "GET /login/ HTTP/1.1" 200 27039
 INFO 2025-10-20 23:14:16,204 basehttp "GET / HTTP/1.1" 200 40490
+INFO 2025-10-20 23:36:33,841 autoreload Watching for file changes with StatReloader
+INFO 2025-10-20 23:36:44,263 basehttp "GET / HTTP/1.1" 200 40490
+INFO 2025-10-20 23:36:47,129 basehttp "GET /login/ HTTP/1.1" 200 27039
+INFO 2025-10-20 23:36:49,831 basehttp "GET /signup/ HTTP/1.1" 200 19877
+INFO 2025-10-20 23:36:55,191 basehttp "GET / HTTP/1.1" 200 40490
+INFO 2025-10-20 23:40:47,827 basehttp "GET / HTTP/1.1" 200 11877
+INFO 2025-10-20 23:40:52,198 basehttp "GET / HTTP/1.1" 200 11877
+INFO 2025-10-20 23:40:56,607 basehttp "GET / HTTP/1.1" 200 11877
+INFO 2025-10-20 23:40:57,958 basehttp "GET / HTTP/1.1" 200 11877
+INFO 2025-10-20 23:46:04,358 basehttp "GET / HTTP/1.1" 200 40468
+WARNING 2025-10-20 23:48:21,752 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-20 23:48:21,753 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12443
+INFO 2025-10-20 23:49:22,777 basehttp "GET /login/ HTTP/1.1" 200 27039
+INFO 2025-10-20 23:49:24,522 basehttp "GET /signup/ HTTP/1.1" 200 19877
+INFO 2025-10-20 23:49:26,186 basehttp "GET / HTTP/1.1" 200 40468
+INFO 2025-10-20 23:55:13,639 autoreload Watching for file changes with StatReloader
+INFO 2025-10-20 23:55:15,266 basehttp "GET /login/ HTTP/1.1" 200 27039
+INFO 2025-10-20 23:55:35,152 basehttp "GET / HTTP/1.1" 200 40468
+INFO 2025-10-20 23:55:38,431 basehttp "GET /manager/login/ HTTP/1.1" 200 4126
+INFO 2025-10-21 19:08:29,539 autoreload Watching for file changes with StatReloader

@@ -1,303 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Management - CafeNest</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f7f3e8;
-        }
-        
-        .navbar {
-            background: #8B4513;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar h1 {
-            font-size: 24px;
-        }
-        
-        .navbar .highlight {
-            color: #E2725B;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        
-        .nav-links a:hover {
-            background: #E2725B;
-            color: white;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px;
-        }
-        
-        .page-header {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 4px solid #C37A67;
-        }
-        
-        .page-header h2 {
-            color: #8B4513;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: #E2725B;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #D74426;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(226, 114, 91, 0.3);
-        }
-        
-        .btn-success {
-            background: #4CAF50;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #45A049;
-            transform: translateY(-2px);
-        }
-        
-        .btn-warning {
-            background: #F4A460;
-            color: white;
-        }
-        
-        .btn-warning:hover {
-            background: #E09850;
-            transform: translateY(-2px);
-        }
-        
-        .btn-danger {
-            background: #CD5C5C;
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background: #B22222;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: #A0522D;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #8B4513;
-        }
-        
-        .table-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
-            overflow-x: auto;
-            border-top: 4px solid #C37A67;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th {
-            background: #8B4513;
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #DEC2AF;
-            color: #4a3728;
-        }
-        
-        tr:hover {
-            background: #FFF5E6;
-        }
-        
-        .badge {
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-active {
-            background: #C8E6C9;
-            color: #2E7D32;
-        }
-        
-        .badge-inactive {
-            background: #FFCDD2;
-            color: #C62828;
-        }
-        
-        .badge-role {
-            background: #E1F5F1;
-            color: #00695C;
-        }
-        
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .messages {
-            margin-bottom: 20px;
-        }
-        
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .alert-success {
-            background: #C8E6C9;
-            color: #2E7D32;
-            border: 1px solid #A5D6A7;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Management - CafeNest</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --primary-brown:#8B4513;
+      --dark-brown:#6B2213;
+      --accent-coral:#E2725B;
+      --tan:#DEC2AF;
+      --cream:#FFFAF5;
+      --text:#4a3728;
+    }
+
+    /* Smooth scroll + cross-browser scrollbar */
+    html{
+      scroll-behavior:smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-coral) var(--cream);
+      scrollbar-gutter: stable both-edges;
+    }
+    ::-webkit-scrollbar{ width:12px; height:12px; }
+    ::-webkit-scrollbar-track{
+      background: linear-gradient(180deg, var(--cream), var(--tan));
+      border-radius:10px;
+    }
+    ::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, var(--accent-coral), var(--primary-brown));
+      border-radius:10px;
+      border:2px solid var(--cream);
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:0 0 8px rgba(226,114,91,.4);
+    }
+
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f7f3e8 0%, #f1eadb 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow-x:hidden;
+    }
+
+    /* Navbar (glassy) */
+    .navbar{
+      position:fixed; inset:0 0 auto 0; height:70px;
+      background: linear-gradient(135deg, rgba(139,69,19,.92), rgba(107,34,19,.92));
+      color:#fff;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 10px 30px rgba(139,69,19,.25);
+      z-index:1000;
+    }
+
+    .nav-inner{
+      max-width:1400px; margin:0 auto; height:100%;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 30px;
+    }
+    .brand{
+      color:#fff; text-decoration:none; font-size:24px; font-weight:800; letter-spacing:-.3px;
+      transition: transform .25s ease;
+    }
+    .brand .highlight{ color:var(--accent-coral); }
+    .brand:hover{ transform: scale(1.03); }
+
+    .nav-links{ display:flex; gap:10px; align-items:center; }
+    .nav-links a{
+      color:#fff; text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:600;
+      transition: background .25s ease, transform .25s ease;
+    }
+    .nav-links a:hover{ background:rgba(255,255,255,.18); transform: translateY(-1px); }
+
+    /* Hamburger (tablet down) */
+    .hamburger{
+      display:none; width:44px; height:44px; border-radius:10px;
+      border:2px solid rgba(255,255,255,.35); background:rgba(255,255,255,.1);
+      align-items:center; justify-content:center; cursor:pointer;
+      transition: background .25s ease, border-color .25s ease;
+    }
+    .hamburger:hover{ background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.6); }
+    .hamburger span,
+    .hamburger span::before,
+    .hamburger span::after{
+      content:''; display:block; width:22px; height:2px; background:#fff; border-radius:2px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .hamburger span::before{ transform: translateY(-7px); }
+    .hamburger span::after{ transform: translateY(7px); }
+    .hamburger[aria-expanded="true"] span{ opacity:0; }
+    .hamburger[aria-expanded="true"] span::before{ transform: rotate(45deg); }
+    .hamburger[aria-expanded="true"] span::after{ transform: rotate(-45deg); }
+
+    /* Drawer + overlay */
+    .overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(4px);
+      opacity:0; pointer-events:none; transition: opacity .25s ease; z-index:999;
+    }
+    .overlay.active{ opacity:1; pointer-events:auto; }
+
+    .drawer{
+      position:fixed; top:0; right:-100%;
+      width:320px; max-width:88vw; height:100vh;
+      background: linear-gradient(180deg, var(--primary-brown), var(--dark-brown));
+      box-shadow:-10px 0 30px rgba(0,0,0,.35);
+      padding:90px 22px 22px;
+      transition:right .35s cubic-bezier(.68,-.55,.265,1.55);
+      z-index:1000; overflow-y:auto;
+    }
+    .drawer.active{ right:0; }
+    .drawer a{
+      display:flex; align-items:center; gap:10px; color:#fff; text-decoration:none;
+      padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08); font-weight:600; margin-bottom:10px;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .drawer a:hover{ transform: translateX(6px); background: rgba(255,255,255,.16); }
+
+    /* Page container */
+    .container{
+      max-width:1400px; margin:0 auto; padding:100px 30px 40px;
+    }
+
+    .page-header{
+      background:#fff; padding:26px 30px; border-radius:18px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 18px 50px rgba(139,69,19,.12);
+      margin-bottom:26px;
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    }
+    .page-header h2{ color:var(--primary-brown); font-weight:800; font-size:28px; letter-spacing:-.3px; }
+
+    .btn{
+      padding:11px 20px; border:none; border-radius:10px; cursor:pointer; font-size:14px; font-weight:700;
+      transition: transform .2s ease, box-shadow .2s ease;
+      text-decoration:none; display:inline-block;
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, var(--accent-coral), var(--dark-brown)); color:#fff;
+      box-shadow:0 8px 24px rgba(226,114,91,.35);
+    }
+    .btn-primary:hover{ transform: translateY(-2px); box-shadow:0 12px 32px rgba(226,114,91,.45); }
+    .btn-success{ background:#4CAF50; color:#fff; }
+    .btn-success:hover{ background:#45A049; transform: translateY(-2px); }
+    .btn-warning{ background:#F4A460; color:#fff; }
+    .btn-warning:hover{ background:#E09850; transform: translateY(-2px); }
+    .btn-danger{ background:#CD5C5C; color:#fff; }
+    .btn-danger:hover{ background:#B22222; transform: translateY(-2px); }
+    .btn-secondary{ background:#A0522D; color:#fff; }
+    .btn-secondary:hover{ background:#8B4513; }
+
+    /* Messages */
+    .messages{ margin-bottom:18px; }
+    .alert{
+      padding:14px 18px; border-radius:12px; margin-bottom:10px; font-weight:600;
+      box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+    .alert-success{ background:#C8E6C9; color:#2E7D32; border:1px solid #A5D6A7; }
+
+    /* Table card */
+    .table-container{
+      background:#fff; padding:20px; border-radius:18px;
+      border:2px solid rgba(226,114,91,.28);
+      box-shadow:0 18px 50px rgba(139,69,19,.12);
+      overflow-x:auto;
+    }
+
+    table{ width:100%; border-collapse:collapse; }
+    th{
+      background: linear-gradient(135deg, var(--primary-brown), var(--dark-brown));
+      color:#fff; padding:16px 14px; text-align:left; font-weight:700; font-size:14px; white-space:nowrap;
+    }
+    td{ padding:16px 14px; border-bottom:1px solid var(--tan); }
+    tr:hover{ background:#FFF5E6; }
+
+    .badge{
+      padding:5px 10px; border-radius:15px; font-size:12px; font-weight:700; display:inline-block;
+    }
+    .badge-active{ background:#C8E6C9; color:#2E7D32; }
+    .badge-inactive{ background:#FFCDD2; color:#C62828; }
+    .badge-role{ background:#E1F5F1; color:#00695C; }
+
+    .actions{ display:flex; gap:8px; flex-wrap:wrap; }
+
+    /* Responsive */
+    @media (max-width:1024px){
+      .nav-links{ display:none; }
+      .hamburger{ display:inline-flex; }
+      .container{ padding:96px 20px 32px; }
+    }
+    @media (max-width:768px){
+      .table-container{ padding:14px; }
+      th, td{ padding:12px 10px; font-size:13px; }
+    }
+
+
+    /* ============================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   Works from 4K displays to mobile phones
+   ============================================ */
+
+/* Extra Large Desktop (1920px+) */
+@media (min-width: 1920px) {
+  .container { max-width: 1600px; }
+}
+
+/* Large Desktop (1440-1919px) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .container { max-width: 1400px; }
+}
+
+/* Standard Desktop (1200-1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .container { max-width: 1140px; padding: 100px 25px 40px; }
+}
+
+/* Laptop/Small Desktop (1024-1199px) - HAMBURGER STARTS */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .container { max-width: 960px; padding: 96px 20px 32px; }
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  
+  /* Adjust grids */
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .content-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+
+/* Tablet Portrait (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 20px 30px; }
+  
+  /* Single column layouts */
+  .content-grid,
+  .form-row,
+  .stats-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  
+  /* Adjust cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 24px 20px !important; border-radius: 16px !important; }
+  
+  /* Typography adjustments */
+  .page-header h2,
+  .form-container h2 { font-size: 24px !important; }
+  
+  /* Tables */
+  .table-container { overflow-x: auto; }
+  table { min-width: 600px; }
+  th, td { padding: 12px 10px !important; font-size: 13px !important; }
+}
+
+/* Mobile Large (640-767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 90px 16px 24px; }
+  
+  /* Force single column */
+  .content-grid,
+  .form-row,
+  .stats-grid,
+  .table-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  
+  /* Compact cards */
+  .form-container,
+  .table-container,
+  .page-header { padding: 20px 16px !important; border-radius: 14px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 20px !important; }
+  .page-header h2 { font-size: 22px !important; }
+  
+  /* Buttons */
+  .btn { padding: 10px 18px !important; font-size: 13px !important; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn { width: 100%; }
+  
+  /* Tables - force scroll */
+  table { min-width: 550px; }
+  th, td { padding: 10px 8px !important; font-size: 12px !important; }
+}
+
+/* Mobile Medium (480-639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 85px 14px 20px; }
+  .nav-inner { padding: 0 20px; }
+  
+  /* Ultra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 18px 14px !important; border-radius: 12px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 18px !important; }
+  .page-header h2 { font-size: 20px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 28px !important; }
+  
+  /* Buttons full width */
+  .btn,
+  .btn-sm { width: 100%; justify-content: center; padding: 10px 16px !important; }
+  .actions,
+  .form-actions,
+  .header-actions { flex-direction: column; gap: 8px; }
+  
+  /* Tables */
+  table { min-width: 480px; }
+  th, td { padding: 8px 6px !important; font-size: 11px !important; }
+}
+
+/* Mobile Small (360-479px) */
+@media (min-width: 360px) and (max-width: 479px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 80px 12px 16px; }
+  .nav-inner { padding: 0 16px; }
+  
+  /* Extra compact */
+  .form-container,
+  .table-container,
+  .page-header { padding: 16px 12px !important; border-radius: 10px !important; }
+  
+  /* Typography */
+  .navbar h1,
+  .brand { font-size: 16px !important; }
+  .hamburger { width: 40px !important; height: 40px !important; }
+  .page-header h2 { font-size: 18px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 24px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 10px 12px !important; font-size: 14px !important; }
+  
+  /* Buttons */
+  .btn { padding: 9px 14px !important; font-size: 12px !important; }
+  
+  /* Tables ultra compact */
+  table { min-width: 420px; }
+  th, td { padding: 6px 4px !important; font-size: 10px !important; }
+  .badge { font-size: 10px !important; padding: 4px 8px !important; }
+}
+
+/* Mobile Extra Small (320-359px) */
+@media (max-width: 359px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: inline-flex !important; }
+  .container { padding: 75px 10px 12px; }
+  .nav-inner { padding: 0 12px; }
+  
+  /* Minimal spacing */
+  .form-container,
+  .table-container,
+  .page-header { padding: 14px 10px !important; border-radius: 8px !important; }
+  
+  /* Typography tiny */
+  .navbar h1,
+  .brand { font-size: 15px !important; }
+  .hamburger { width: 36px !important; height: 36px !important; }
+  .hamburger span { width: 18px !important; }
+  .page-header h2 { font-size: 16px !important; }
+  .stat-card h3,
+  .stat-card .value { font-size: 22px !important; }
+  .stat-card p { font-size: 11px !important; }
+  
+  /* Compact inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { padding: 8px 10px !important; font-size: 13px !important; }
+  
+  /* Buttons minimal */
+  .btn { padding: 8px 12px !important; font-size: 11px !important; }
+  
+  /* Tables minimal */
+  table { min-width: 360px; }
+  th, td { padding: 5px 3px !important; font-size: 9px !important; }
+  .badge { font-size: 9px !important; padding: 3px 6px !important; }
+}
+
+/* ============================================
+   UNIVERSAL FIXES FOR ALL ELEMENTS
+   ============================================ */
+
+/* Prevent horizontal overflow */
+* {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Flexible containers */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 1023px) {
+  .btn,
+  .btn-sm,
+  button,
+  a[class*="btn"] {
+    min-height: 44px; /* Apple's recommended touch target */
+    touch-action: manipulation; /* Disable double-tap zoom */
+  }
+}
+
+/* Optimize drawer for all sizes */
+@media (max-width: 1023px) {
+  .drawer {
+    width: min(320px, 85vw);
+  }
+}
+
+/* Ensure stat cards stack nicely */
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <h1>Cafe<span class="highlight">Nest</span></h1>
-        <div class="nav-links">
-            <a href="{% url 'owner_dashboard' %}">Dashboard</a>
-            <a href="{% url 'cafe_list' %}">Cafés</a>
-            <a href="{% url 'owner_table_list' %}">Tables</a>
-            <a href="{% url 'staff_list' %}">Staff</a>
-            <a href="{% url 'menu_list' %}">Menu</a>
-            <a href="{% url 'reports' %}">Reports</a>
-            <a href="{% url 'owner_logout' %}">Logout</a>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <div class="page-header">
-            <h2>Staff Management</h2>
-            <a href="{% url 'add_staff' %}" class="btn btn-primary">+ Add New Staff</a>
-        </div>
-        
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Café</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Joined</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if staff_members %}
-                        {% for staff in staff_members %}
-                        <tr>
-                            <td><strong>{{ staff.name }}</strong></td>
-                            <td>{{ staff.email }}</td>
-                            <td>{{ staff.phone }}</td>
-                            <td>{{ staff.cafe.name }}</td>
-                            <td><span class="badge badge-role">{{ staff.get_role_display }}</span></td>
-                            <td>
-                                {% if staff.status %}
-                                    <span class="badge badge-active">Active</span>
-                                {% else %}
-                                    <span class="badge badge-inactive">Inactive</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ staff.date_joined|date:"M d, Y" }}</td>
-                            <td>
-                                <div class="actions">
-                                    <a href="{% url 'toggle_staff_status' staff.pk %}" class="btn {% if staff.status %}btn-warning{% else %}btn-success{% endif %}">
-                                        {% if staff.status %}Deactivate{% else %}Activate{% endif %}
-                                    </a>
-                                    <a href="{% url 'edit_staff' staff.pk %}" class="btn btn-secondary">Edit</a>
-                                    <form method="POST" action="{% url 'delete_staff' staff.pk %}" style="display: inline;" 
-      onsubmit="return confirm('⚠️ PERMANENT DELETION WARNING\n\nYou are about to permanently delete:\n\n👤 Staff: {{ staff.name }}\n📧 Email: {{ staff.email }}\n🏪 Café: {{ staff.cafe.name }}\n👔 Role: {{ staff.get_role_display }}\n\nThis will remove:\n✗ Staff record\n✗ User account\n✗ Login credentials\n✗ All associated data\n\n⚠️ THIS CANNOT BE UNDONE!\n\nType OK in the prompt to confirm:') && prompt('Type DELETE to confirm:', '') === 'DELETE'">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <a href="{% url 'owner_dashboard' %}" class="brand" aria-label="CafeNest">Cafe<span class="highlight">Nest</span></a>
 
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="8" style="text-align: center; color: #8B4513;">No staff members found. Add your first staff member to get started.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+        <a href="{% url 'cafe_list' %}">Cafés</a>
+        <a href="{% url 'owner_table_list' %}">Tables</a>
+        <a href="{% url 'staff_list' %}">Staff</a>
+        <a href="{% url 'menu_list' %}">Menu</a>
+        <a href="{% url 'reports' %}">Reports</a>
+        <a href="{% url 'owner_logout' %}">Logout</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger"
+        aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <span></span>
+      </button>
     </div>
+  </header>
+
+  <!-- Mobile overlay + drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="mobile-drawer" aria-hidden="true">
+    <a href="{% url 'owner_dashboard' %}">Dashboard</a>
+    <a href="{% url 'cafe_list' %}">Cafés</a>
+    <a href="{% url 'owner_table_list' %}">Tables</a>
+    <a href="{% url 'staff_list' %}">Staff</a>
+    <a href="{% url 'menu_list' %}">Menu</a>
+    <a href="{% url 'reports' %}">Reports</a>
+    <a href="{% url 'owner_logout' %}">Logout</a>
+  </aside>
+
+  <!-- Page -->
+  <main class="container">
+    <section class="page-header">
+      <h2>Staff Management</h2>
+      <a href="{% url 'add_staff' %}" class="btn btn-primary">+ Add New Staff</a>
+    </section>
+
+    {% if messages %}
+    <div class="messages" role="status" aria-live="polite">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Café</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if staff_members %}
+            {% for staff in staff_members %}
+            <tr>
+              <td><strong>{{ staff.name }}</strong></td>
+              <td>{{ staff.email }}</td>
+              <td>{{ staff.phone }}</td>
+              <td>{{ staff.cafe.name }}</td>
+              <td><span class="badge badge-role">{{ staff.get_role_display }}</span></td>
+              <td>
+                {% if staff.status %}
+                  <span class="badge badge-active">Active</span>
+                {% else %}
+                  <span class="badge badge-inactive">Inactive</span>
+                {% endif %}
+              </td>
+              <td>{{ staff.date_joined|date:"M d, Y" }}</td>
+              <td>
+                <div class="actions">
+                  <a href="{% url 'toggle_staff_status' staff.pk %}" class="btn {% if staff.status %}btn-warning{% else %}btn-success{% endif %}">
+                    {% if staff.status %}Deactivate{% else %}Activate{% endif %}
+                  </a>
+                  <a href="{% url 'edit_staff' staff.pk %}" class="btn btn-secondary">Edit</a>
+                  <form method="POST" action="{% url 'delete_staff' staff.pk %}" style="display:inline" onsubmit="return confirm('⚠️ PERMANENT DELETION WARNING\n\nYou are about to permanently delete:\n\n👤 Staff: {{ staff.name }}\n📧 Email: {{ staff.email }}\n🏪 Café: {{ staff.cafe.name }}\n👔 Role: {{ staff.get_role_display }}\n\nThis will remove:\n✗ Staff record\n✗ User account\n✗ Login credentials\n✗ All associated data\n\n⚠️ THIS CANNOT BE UNDONE!\n\nType DELETE to confirm:') && prompt('Type DELETE to confirm:', '') === 'DELETE'">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="8" style="text-align:center; color:var(--primary-brown);">No staff members found. Add your first staff member to get started.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    // Accessible hamburger drawer
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('overlay');
+
+    function setMenuState(open){
+      hamburger.setAttribute('aria-expanded', String(open));
+      drawer.classList.toggle('active', open);
+      overlay.classList.toggle('active', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if(open){
+        const firstLink = drawer.querySelector('a');
+        if(firstLink) firstLink.focus();
+      }
+    }
+
+    hamburger.addEventListener('click', ()=> setMenuState(hamburger.getAttribute('aria-expanded')!=='true'));
+    overlay.addEventListener('click', ()=> setMenuState(false));
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenuState(false); });
+  </script>
 </body>
 </html>
