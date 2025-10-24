@@ -4871,3 +4871,179 @@ INFO 2025-10-21 19:33:54,656 basehttp "GET /reports/ HTTP/1.1" 200 18653
 INFO 2025-10-21 19:33:57,319 basehttp "GET /owner/tables/ HTTP/1.1" 200 21140
 INFO 2025-10-21 19:37:43,552 basehttp "POST /owner/tables/cleanup/ HTTP/1.1" 302 0
 INFO 2025-10-21 19:37:43,589 basehttp "GET /owner/tables/ HTTP/1.1" 200 21316
+INFO 2025-10-21 19:43:01,184 basehttp "GET /owner/tables/ HTTP/1.1" 200 18970
+INFO 2025-10-21 19:43:02,172 basehttp "GET /owner/tables/ HTTP/1.1" 200 18970
+INFO 2025-10-21 19:43:02,935 basehttp "GET /owner/tables/ HTTP/1.1" 200 18970
+INFO 2025-10-21 19:43:18,460 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-10-21 19:43:18,466 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-21 19:43:21,931 basehttp "GET /manager/login/ HTTP/1.1" 200 4456
+INFO 2025-10-21 19:43:27,376 basehttp "GET /login/ HTTP/1.1" 200 34394
+INFO 2025-10-21 19:43:28,841 basehttp "GET /accounts/google/login/?process=login HTTP/1.1" 302 0
+INFO 2025-10-21 19:43:34,276 basehttp "GET /accounts/google/login/callback/?state=xN85BlTQ82UmiPQU&code=4%2F0AVGzR1CmLgYvTZvanOyvlbxRPjPOfrq6Ya2Vtl9qdnUKEpO_EnYHAyhRajBkGigz_doe2A&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=7&prompt=none HTTP/1.1" 302 0
+INFO 2025-10-21 19:43:34,315 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21366
+INFO 2025-10-21 19:43:36,535 basehttp "GET /staff/ HTTP/1.1" 200 18903
+INFO 2025-10-21 19:43:38,620 basehttp "GET /owner/tables/ HTTP/1.1" 200 18970
+INFO 2025-10-21 19:43:40,107 basehttp "GET /owner/tables/add/ HTTP/1.1" 200 18954
+INFO 2025-10-21 19:49:33,029 basehttp "POST /owner/tables/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 19:49:33,054 basehttp "GET /owner/tables/ HTTP/1.1" 200 20146
+INFO 2025-10-21 19:49:36,229 basehttp "GET /owner/tables/1/qr/ HTTP/1.1" 200 19660
+INFO 2025-10-21 20:46:29,276 basehttp "GET /staff/ HTTP/1.1" 200 18903
+INFO 2025-10-21 20:46:32,312 basehttp "GET /staff/add/ HTTP/1.1" 200 18745
+INFO 2025-10-21 20:48:29,228 autoreload D:\CODING\CafeNest\owner\models.py changed, reloading.
+INFO 2025-10-21 20:48:32,679 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 20:49:04,284 autoreload D:\CODING\CafeNest\owner\models.py changed, reloading.
+INFO 2025-10-21 20:49:05,925 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 20:49:10,665 basehttp "GET /staff/add/ HTTP/1.1" 200 18699
+INFO 2025-10-21 20:49:12,038 basehttp "GET /staff/add/ HTTP/1.1" 200 18699
+INFO 2025-10-21 20:57:51,260 autoreload D:\CODING\CafeNest\owner\models.py changed, reloading.
+INFO 2025-10-21 20:57:52,340 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 20:58:31,440 autoreload D:\CODING\CafeNest\owner\views.py changed, reloading.
+INFO 2025-10-21 20:58:32,506 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:00:26,861 autoreload D:\CODING\CafeNest\owner\utils.py changed, reloading.
+INFO 2025-10-21 21:00:28,320 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:01:17,706 basehttp "POST /staff/add/ HTTP/1.1" 200 19606
+INFO 2025-10-21 21:01:36,538 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:01:36,606 basehttp "GET /staff/ HTTP/1.1" 200 20662
+INFO 2025-10-21 21:01:41,682 basehttp "GET /staff/toggle/4/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:01:41,705 basehttp "GET /staff/ HTTP/1.1" 200 20601
+INFO 2025-10-21 21:04:40,132 autoreload D:\CODING\CafeNest\owner\utils.py changed, reloading.
+INFO 2025-10-21 21:04:41,797 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:04:45,005 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:05:26,027 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:05:26,051 basehttp "GET /staff/ HTTP/1.1" 200 22115
+INFO 2025-10-21 21:05:29,150 basehttp "GET /staff/toggle/5/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:05:29,168 basehttp "GET /staff/ HTTP/1.1" 200 22121
+INFO 2025-10-21 21:07:40,588 basehttp "POST /staff/delete/5/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:07:40,613 basehttp "GET /staff/ HTTP/1.1" 200 20593
+INFO 2025-10-21 21:07:45,805 basehttp "POST /staff/delete/4/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:07:45,842 basehttp "GET /staff/ HTTP/1.1" 200 19075
+INFO 2025-10-21 21:07:52,276 basehttp "POST /staff/delete/3/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:07:52,289 basehttp "GET /staff/ HTTP/1.1" 200 17735
+INFO 2025-10-21 21:07:53,363 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:08:06,952 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:08:06,969 basehttp "GET /staff/ HTTP/1.1" 200 19069
+INFO 2025-10-21 21:08:10,912 basehttp "GET /staff/toggle/6/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:08:10,926 basehttp "GET /staff/ HTTP/1.1" 200 19081
+INFO 2025-10-21 21:09:54,123 autoreload D:\CODING\CafeNest\owner\utils.py changed, reloading.
+INFO 2025-10-21 21:09:55,082 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:11:15,626 autoreload D:\CODING\CafeNest\owner\utils.py changed, reloading.
+INFO 2025-10-21 21:11:16,846 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:11:45,393 basehttp "POST /staff/delete/6/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:11:45,418 basehttp "GET /staff/ HTTP/1.1" 200 17735
+INFO 2025-10-21 21:11:47,826 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:11:58,897 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:11:58,913 basehttp "GET /staff/ HTTP/1.1" 200 19077
+INFO 2025-10-21 21:12:00,725 basehttp "GET /staff/toggle/7/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:12:00,746 basehttp "GET /staff/ HTTP/1.1" 200 19089
+INFO 2025-10-21 21:13:17,588 autoreload D:\CODING\CafeNest\owner\utils.py changed, reloading.
+INFO 2025-10-21 21:13:18,605 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:13:30,197 basehttp "POST /staff/delete/7/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:13:30,218 basehttp "GET /staff/ HTTP/1.1" 200 17735
+INFO 2025-10-21 21:15:05,909 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:15:21,966 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:15:21,984 basehttp "GET /staff/ HTTP/1.1" 200 19085
+INFO 2025-10-21 21:15:44,361 basehttp "GET /staff/toggle/8/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:15:44,380 basehttp "GET /staff/ HTTP/1.1" 200 19097
+INFO 2025-10-21 21:17:01,167 autoreload D:\CODING\CafeNest\owner\utils.py changed, reloading.
+INFO 2025-10-21 21:17:02,445 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:17:19,694 basehttp "POST /staff/delete/8/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:17:19,719 basehttp "GET /staff/ HTTP/1.1" 200 17735
+INFO 2025-10-21 21:17:30,510 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:17:42,735 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:17:42,752 basehttp "GET /staff/ HTTP/1.1" 200 19101
+INFO 2025-10-21 21:17:45,909 basehttp "GET /staff/toggle/9/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:17:45,931 basehttp "GET /staff/ HTTP/1.1" 200 19113
+INFO 2025-10-21 21:24:29,526 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:24:29,549 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-21 21:24:39,324 basehttp "GET /login/ HTTP/1.1" 200 34640
+INFO 2025-10-21 21:24:59,774 autoreload Watching for file changes with StatReloader
+INFO 2025-10-21 21:25:07,017 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-21 21:25:21,534 basehttp "GET /login/ HTTP/1.1" 200 34394
+INFO 2025-10-21 21:25:25,834 basehttp "GET /signup/ HTTP/1.1" 200 26793
+INFO 2025-10-21 21:25:32,450 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-21 21:25:35,296 basehttp "GET /login/ HTTP/1.1" 200 34394
+INFO 2025-10-21 21:25:37,024 basehttp "GET /accounts/google/login/?process=login HTTP/1.1" 302 0
+INFO 2025-10-21 21:25:46,425 basehttp "GET /accounts/google/login/callback/?state=9lGuUgx4rpAVXDuc&code=4%2F0AVGzR1AioI-gXjhy-xW_HC3dzxrm_KyYHHY6VG-SvLvtThFTMZOqC4ir6t55WlZ101r2hQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=7&prompt=none HTTP/1.1" 302 0
+INFO 2025-10-21 21:25:46,843 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21366
+INFO 2025-10-21 21:25:52,585 basehttp "GET /cafes/edit/1/ HTTP/1.1" 200 14138
+INFO 2025-10-21 21:25:56,621 basehttp "GET /cafes/ HTTP/1.1" 200 20931
+INFO 2025-10-21 21:26:00,011 basehttp "GET /cafes/ HTTP/1.1" 200 20931
+INFO 2025-10-21 21:26:01,442 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21198
+INFO 2025-10-21 21:26:08,168 basehttp "GET /cafes/ HTTP/1.1" 200 20931
+INFO 2025-10-21 21:26:11,206 basehttp "GET /owner/tables/ HTTP/1.1" 200 19978
+INFO 2025-10-21 21:26:18,856 basehttp "GET /owner/tables/1/qr/ HTTP/1.1" 200 19660
+INFO 2025-10-21 21:26:24,359 basehttp "GET /owner/tables/ HTTP/1.1" 200 19978
+INFO 2025-10-21 21:26:41,921 basehttp "GET /owner/tables/ HTTP/1.1" 200 19978
+INFO 2025-10-21 21:26:43,157 basehttp "GET /staff/ HTTP/1.1" 200 18939
+INFO 2025-10-21 21:26:46,367 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:28:05,657 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:28:05,692 basehttp "GET /staff/ HTTP/1.1" 200 20616
+INFO 2025-10-21 21:28:12,182 basehttp "GET /staff/toggle/10/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:28:12,220 basehttp "GET /staff/ HTTP/1.1" 200 20628
+INFO 2025-10-21 21:28:42,462 basehttp "POST /staff/delete/10/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:28:42,520 basehttp "GET /staff/ HTTP/1.1" 200 19111
+INFO 2025-10-21 21:28:44,360 basehttp "GET /staff/add/ HTTP/1.1" 200 19365
+INFO 2025-10-21 21:29:54,211 basehttp "POST /staff/add/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:29:54,238 basehttp "GET /staff/ HTTP/1.1" 200 20620
+INFO 2025-10-21 21:29:59,197 basehttp "GET /staff/toggle/11/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:29:59,228 basehttp "GET /staff/ HTTP/1.1" 200 20633
+INFO 2025-10-21 21:30:18,515 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:30:18,526 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-21 21:30:21,072 basehttp "GET /manager/login/ HTTP/1.1" 200 4456
+INFO 2025-10-21 21:31:21,321 basehttp "POST /manager/login/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:31:21,777 basehttp "GET /manager/dashboard/ HTTP/1.1" 200 12073
+INFO 2025-10-21 21:31:45,420 basehttp "GET /manager/dashboard/ HTTP/1.1" 200 12073
+INFO 2025-10-21 21:32:12,328 basehttp "GET /manager/logout/ HTTP/1.1" 302 0
+INFO 2025-10-21 21:32:12,339 basehttp "GET /manager/login/ HTTP/1.1" 200 4743
+INFO 2025-10-21 21:32:14,001 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-22 18:41:24,225 autoreload Watching for file changes with StatReloader
+INFO 2025-10-22 19:49:29,848 autoreload D:\CODING\CafeNest\manager\urls.py changed, reloading.
+INFO 2025-10-22 19:49:34,470 autoreload Watching for file changes with StatReloader
+INFO 2025-10-22 20:55:29,765 autoreload D:\CODING\CafeNest\manager\views.py changed, reloading.
+INFO 2025-10-22 20:55:30,656 autoreload Watching for file changes with StatReloader
+INFO 2025-10-22 20:57:27,060 autoreload D:\CODING\CafeNest\manager\views.py changed, reloading.
+INFO 2025-10-22 20:57:28,283 autoreload Watching for file changes with StatReloader
+INFO 2025-10-22 21:03:29,762 basehttp "GET / HTTP/1.1" 200 41482
+WARNING 2025-10-22 21:03:30,147 log Not Found: /favicon.ico
+WARNING 2025-10-22 21:03:30,150 basehttp "GET /favicon.ico HTTP/1.1" 404 12332
+INFO 2025-10-22 21:03:32,737 basehttp "GET /login/ HTTP/1.1" 200 34394
+INFO 2025-10-22 21:03:53,480 basehttp "GET /accounts/google/login/?process=login HTTP/1.1" 302 0
+INFO 2025-10-22 21:04:00,047 basehttp "GET /accounts/google/login/callback/?state=tEf6SXasDAjkZ7gC&code=4%2F0AVGzR1Ah2OmfjPCwPEPF8LP7YU37svM0DlWs0G_JN52sKZnIX1bDq-uiVZPsjFphTTeBEA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=7&prompt=none HTTP/1.1" 302 0
+INFO 2025-10-22 21:04:00,325 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21366
+INFO 2025-10-22 21:04:05,667 basehttp "GET /staff/ HTTP/1.1" 200 20458
+INFO 2025-10-23 20:05:39,910 autoreload Watching for file changes with StatReloader
+INFO 2025-10-23 20:05:44,649 basehttp "GET / HTTP/1.1" 200 41482
+WARNING 2025-10-23 20:05:45,197 log Not Found: /favicon.ico
+WARNING 2025-10-23 20:05:45,199 basehttp "GET /favicon.ico HTTP/1.1" 404 12332
+INFO 2025-10-23 20:05:52,893 basehttp "GET /login/ HTTP/1.1" 200 34394
+INFO 2025-10-23 20:05:56,169 basehttp "GET /accounts/google/login/?process=login HTTP/1.1" 302 0
+INFO 2025-10-23 20:06:03,888 basehttp "GET /accounts/google/login/callback/?state=WAOxELe5LYqe5jUB&code=4%2F0AVGzR1CtW8ETrDPZuwbt-uzbHBMgg9B9d9AxSTE06Oo7vQB6fl7-e1NmuWuJK6FJrFuMpA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=7&prompt=none HTTP/1.1" 302 0
+INFO 2025-10-23 20:06:04,108 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21366
+INFO 2025-10-23 20:37:19,071 basehttp "GET /owner/tables/ HTTP/1.1" 200 19978
+INFO 2025-10-23 20:37:21,663 basehttp "GET /cafes/ HTTP/1.1" 200 20931
+INFO 2025-10-23 20:37:26,833 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21198
+INFO 2025-10-24 21:04:34,142 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 21:06:48,648 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 21:49:03,928 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 21:53:26,622 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 21:55:17,838 autoreload D:\CODING\CafeNest\manage.py changed, reloading.
+INFO 2025-10-24 21:58:34,711 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:00:24,379 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:01:17,022 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:04:33,787 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:04:56,487 autoreload D:\CODING\CafeNest\owner\models.py changed, reloading.
+INFO 2025-10-24 22:04:59,281 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:07:20,833 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:32:47,742 autoreload Watching for file changes with StatReloader
+INFO 2025-10-24 22:32:52,322 basehttp "GET / HTTP/1.1" 200 41482
+WARNING 2025-10-24 22:32:52,876 log Not Found: /favicon.ico
+WARNING 2025-10-24 22:32:52,878 basehttp "GET /favicon.ico HTTP/1.1" 404 12332
+INFO 2025-10-24 22:33:18,619 basehttp "GET /login/ HTTP/1.1" 200 34394
+INFO 2025-10-24 22:33:22,111 basehttp "GET /accounts/google/login/?process=login HTTP/1.1" 302 0
+INFO 2025-10-24 22:33:28,406 basehttp "GET /accounts/google/login/callback/?state=ouPNty6A13U1jwnW&code=4%2F0Ab32j91MHGnd5CxUTV0AQ39UZtPnNFJ9uJ33cBHIgkyfYFstPduMzGQvMZnOrqWUespZdg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=7&prompt=none HTTP/1.1" 302 0
+INFO 2025-10-24 22:33:28,732 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 21366
+INFO 2025-10-24 22:33:34,545 basehttp "GET /cafes/ HTTP/1.1" 200 20931
+INFO 2025-10-24 22:33:39,997 basehttp "POST /logout/ HTTP/1.1" 302 0
+INFO 2025-10-24 22:33:40,009 basehttp "GET / HTTP/1.1" 200 41482
+INFO 2025-10-24 22:33:48,112 basehttp "GET /manager/login/ HTTP/1.1" 200 4456
+INFO 2025-10-24 22:33:53,638 basehttp "GET / HTTP/1.1" 200 41482

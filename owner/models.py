@@ -37,8 +37,7 @@ class UserProfile(models.Model):
         ('manager', 'Manager'),
         ('counter', 'Counter Staff'),
         ('cook', 'Cook'),
-        ('employee', 'Employee'),
-    ]
+  ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='owner')
@@ -86,11 +85,22 @@ class Cafe(models.Model):
 
 class Staff(models.Model):
     ROLE_CHOICES = [
-        ('manager', 'Manager'),
-        ('counter', 'Counter Staff'),
-        ('cook', 'Cook'),
-        ('employee', 'Employee'),
-    ]
+    ('manager', 'Manager'),
+    ('barista', 'Barista'),
+    ('cashier', 'Cashier / POS Operator'),
+    ('cook', 'Cook / Chef'),
+    ('waiter', 'Waiter / Server'),
+    ('cleaner', 'Cleaner / Utility Staff'),
+    ('inventory', 'Inventory / Procurement Officer'),
+    ('accountant', 'Accountant / Finance Assistant'),
+    ('marketing', 'Marketing / Social Media Executive'),
+    ('maintenance', 'Maintenance Technician'),
+    ('host', 'Host / Receptionist'),
+    ('delivery', 'Delivery Partner'),
+    ('security', 'Security Guard'),
+    ('trainer', 'Trainer / Barista Coach'),
+]
+
     
     cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name='staff')
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='staff_profile', null=True, blank=True)

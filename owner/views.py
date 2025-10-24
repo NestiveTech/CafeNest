@@ -1003,6 +1003,7 @@ def delete_category(request, pk):
             messages.success(request, f'✅ Category "{category_name}" deleted successfully!')
     
     return redirect('add_category')
+
 @login_required(login_url='/owner/login/')
 def get_categories_api(request):
     """API endpoint to get categories for a specific café"""
